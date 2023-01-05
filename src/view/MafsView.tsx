@@ -4,8 +4,9 @@ import coordinateInjectionKey, {
 } from "./CoordinateContext";
 import PaneManager from "./PaneManager";
 import mapInjectionKey, { type MapContextShape } from "./MapContext";
-import { useDraggable, useElementSize } from "@vueuse/core";
+import { useElementSize } from "@vueuse/core";
 
+import { normalizeProps, useDrag } from "vuse-gesture";
 import scaleInjectionKey, { type ScaleContextShape } from "./ScaleContext";
 import { round } from "../math";
 import * as vec from "../vec";
@@ -114,20 +115,17 @@ const MafsView = defineComponent({
     const xSpan = computed(() => xMax.value - xMin.value);
     const ySpan = computed(() => yMax.value - yMin.value);
 
-    // const {
-    //   x: mx,
-    //   y: my,
-    //   style,
-    // } = useDraggable(containerRef, {
-    //   initialValue: { x: 40, y: 40 },
-    // });
-
-    // watch([mx, my], () => {
-    //   offset.value = [
-    //     (-mx.value / width.value) * xSpan,
-    //     (my.value / props.height) * ySpan,
-    //   ];
-    // });
+    const bind = useDrag(
+      ({ offset: [mx, my], event, type }) => {
+        // Prevent document scroll
+        if (type.includes("key")) event.preventDefault();
+        offset.value = [
+          (-mx / width.value) * xSpan.value,
+          (my / props.height) * ySpan.value,
+        ];
+      },
+      { enabled: props.pan }
+    );
 
     const mapX = computed(
       () => (x: number) =>
@@ -145,14 +143,18 @@ const MafsView = defineComponent({
       () => (y: number) => round((-y / ySpan.value) * props.height, 5)
     );
 
-    const unscaleX = (x: number) => round((x / width.value) * xSpan.value, 5);
-    const unscaleY = (y: number) => round((-y / props.height) * ySpan.value, 5);
+    const unscaleX = computed(
+      () => (x: number) => round((x / width.value) * xSpan.value, 5)
+    );
+    const unscaleY = computed(
+      () => (y: number) => round((-y / props.height) * ySpan.value, 5)
+    );
 
     const pixelMatrix = computed(() =>
       vec.matrixBuilder().scale(scaleX.value(1), scaleY.value(1)).get()
     );
     const inversePixelMatrix = computed(() =>
-      vec.matrixBuilder().scale(unscaleX(1), unscaleY(1)).get()
+      vec.matrixBuilder().scale(unscaleX.value(1), unscaleY.value(1)).get()
     );
 
     const cssScale = computed(
@@ -185,10 +187,11 @@ const MafsView = defineComponent({
     return () => (
       <div
         class="MafsView"
-        style={`width:${desiredCssWidth.value};`}
-        // style={`${style.value}width:${desiredCssWidth.value};`}
+        style={{ width: desiredCssWidth.value }}
         tabindex={props.pan ? 0 : -1}
         ref={containerRef}
+        v-bind="normalizeProps(bind())"
+        {...normalizeProps(bind())}
       >
         <PaneManager>
           <svg
