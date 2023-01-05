@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, ref, type PropType } from "vue";
+import { computed, defineComponent, ref, type PropType } from "vue";
 import GridPattern from "./GridPattern.vue";
 import { range, round } from "../math";
 import { usePaneContext } from "../view/PaneManager";
@@ -88,10 +88,6 @@ const CartesianCoordinates = defineComponent({
           y={maxY.value}
           width={maxX.value - minX.value}
           height={-(maxY.value - minY.value)}
-          // x={minX}
-          // y={maxY}
-          // width={maxX - minX}
-          // height={-(maxY - minY)}
         />
 
         {xAxis.value.labels && (
@@ -153,26 +149,23 @@ const XLabels = defineComponent({
       )
     );
 
-    return () =>
-      h(
-        "g",
-        { class: "mafs-shadow" },
-        xs.value
+    return () => (
+      <g class="mafs-shadow">
+        {xs.value
           .filter((x) => Math.abs(scaleX.value(x) - scaleX.value(0)) > 1)
-          .map((x) =>
-            h(
-              "text",
-              {
-                key: x,
-                x: scaleX.value(x),
-                y: 5,
-                "dominant-baseline": "hanging",
-                "text-anchor": "middle",
-              },
-              props.labelMaker(x)
-            )
-          )
-      );
+          .map((x) => (
+            <text
+              key={x}
+              x={scaleX.value(x)}
+              y={5}
+              dominant-baseline="hanging"
+              text-anchor="middle"
+            >
+              {props.labelMaker(x)}
+            </text>
+          ))}
+      </g>
+    );
   },
 });
 
@@ -193,25 +186,17 @@ const YLabels = defineComponent({
       )
     );
 
-    return () =>
-      h(
-        "g",
-        { class: "mafs-shadow" },
-        ys.value
+    return () => (
+      <g className="mafs-shadow">
+        {ys.value
           .filter((y) => Math.abs(scaleY.value(y) - scaleY.value(0)) > 1)
-          .map((y) =>
-            h(
-              "text",
-              {
-                key: y,
-                x: 5,
-                y: scaleY.value(y),
-                "dominant-baseline": "central",
-              },
-              props.labelMaker(y)
-            )
-          )
-      );
+          .map((y) => (
+            <text key={y} x={5} y={scaleY.value(y)} dominant-baseline="central">
+              {props.labelMaker(y)}
+            </text>
+          ))}
+      </g>
+    );
   },
 });
 

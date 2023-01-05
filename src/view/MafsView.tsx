@@ -1,18 +1,10 @@
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  provide,
-  ref,
-  watch,
-  type PropType,
-} from "vue";
+import { computed, defineComponent, provide, ref, type PropType } from "vue";
 import coordinateInjectionKey, {
   type CoordinateContextShape,
 } from "./CoordinateContext";
 import PaneManager from "./PaneManager";
 import mapInjectionKey, { type MapContextShape } from "./MapContext";
-import { useDraggable, useResizeObserver } from "@vueuse/core";
+import { useDraggable, useElementSize } from "@vueuse/core";
 
 import scaleInjectionKey, { type ScaleContextShape } from "./ScaleContext";
 import { round } from "../math";
@@ -49,27 +41,24 @@ const MafsView = defineComponent({
       }>,
       default: () => ({ x: [-3, 3], y: [-3, 3] }),
     },
-    preserveAspectRatio: { type: [String, Boolean], default: "contain" },
-    ssr: { type: Boolean, default: false },
+    preserveAspectRatio: {
+      type: [String, Boolean],
+      default: "contain",
+      validator(prop: string | boolean) {
+        return ["contain", false].includes(prop);
+      },
+    },
   },
   setup(props, { slots }) {
-    const visible = ref(props.ssr ? true : false);
+    const visible = ref(true);
     const desiredCssWidth = computed(() =>
       props.width === "auto" ? "100%" : `${props.width}px`
     );
 
     const containerRef = ref<HTMLDivElement | null>(null);
-    // const width = ref(props.ssr ? 500 : 1);
-    const width = ref(props.width as number);
-    useResizeObserver(containerRef, (entries) => {
-      const entry = entries[0];
-      const { width: containerWidth } = entry.contentRect;
-      console.log(containerWidth);
-      width.value = containerWidth;
-    });
-
-    onMounted(() => {
-      visible.value = true;
+    const { width } = useElementSize(containerRef, {
+      width: 500,
+      height: 1,
     });
 
     const aspect = computed(() => width.value / props.height);
@@ -77,7 +66,7 @@ const MafsView = defineComponent({
     const offset = ref<vec.Vector2>([0, 0]);
 
     const aoi = computed(() => {
-      const padding = props.viewBox?.padding ?? 0.5;
+      const padding = props.viewBox.padding ?? 0.5;
       return {
         xMin: (props.viewBox?.x?.[0] ?? 0) - padding + offset.value[0],
         xMax: (props.viewBox?.x?.[1] ?? 0) + padding + offset.value[0],
@@ -87,12 +76,12 @@ const MafsView = defineComponent({
     });
 
     const coor = computed(() => {
-      // Default behavior for `preserveAspectRatio == false`
       let xMin = aoi.value.xMin;
       let xMax = aoi.value.xMax;
       let yMin = aoi.value.yMin;
       let yMax = aoi.value.yMax;
 
+      // Default behavior for `preserveAspectRatio == false`
       if (props.preserveAspectRatio === "contain") {
         const aoiAspect =
           (aoi.value.xMax - aoi.value.xMin) / (aoi.value.yMax - aoi.value.yMin);
@@ -140,11 +129,14 @@ const MafsView = defineComponent({
     //   ];
     // });
 
-    const mapX = (x: number) =>
-      round(((x - xMin.value) / (xMax.value - xMin.value)) * width.value);
-
-    const mapY = (y: number) =>
-      round(((y - yMax.value) / (yMin.value - yMax.value)) * props.height);
+    const mapX = computed(
+      () => (x: number) =>
+        round(((x - xMin.value) / (xMax.value - xMin.value)) * width.value)
+    );
+    const mapY = computed(
+      () => (y: number) =>
+        round(((y - yMax.value) / (yMin.value - yMax.value)) * props.height)
+    );
 
     const scaleX = computed(
       () => (x: number) => round((x / xSpan.value) * width.value, 5)
@@ -196,13 +188,15 @@ const MafsView = defineComponent({
         style={`width:${desiredCssWidth.value};`}
         // style={`${style.value}width:${desiredCssWidth.value};`}
         tabindex={props.pan ? 0 : -1}
-        ref="containerRef"
+        ref={containerRef}
       >
         <PaneManager>
           <svg
             width={width.value}
             height={props.height}
-            viewBox={`${-mapX(0)} ${-mapY(0)} ${width.value} ${props.height}`}
+            viewBox={`${-mapX.value(0)} ${-mapY.value(0)} ${width.value} ${
+              props.height
+            }`}
             preserveAspectRatio="xMidYMin"
             style={{
               width: desiredCssWidth.value,

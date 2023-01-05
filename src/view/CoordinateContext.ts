@@ -1,7 +1,6 @@
 import { inject, type InjectionKey, type Ref } from "vue";
 import invariant from "tiny-invariant";
 
-// TODO: to see if xMin, xMax, yMin and yMax need to be made reactive types
 export interface CoordinateContextShape {
   xMin: Ref<number>;
   xMax: Ref<number>;

@@ -31,14 +31,8 @@ export function usePaneContext(): PaneContextShape {
 const PaneManager = defineComponent({
   name: "PaneManager",
   setup(_, { slots }) {
-    // TODO: to see if xMin, xMax, yMin and yMax need to be made reactive
     const { xMin, xMax, yMin, yMax } = useCoordinateContext();
     const base = 2;
-
-    // const xSpan = xMax - xMin;
-    // const xStep = base ** Math.round(Math.log10(xSpan) / Math.log10(base));
-    // const xLowerBound = Math.floor(xMin / xStep) * xStep;
-    // const xUpperBound = Math.ceil(xMax / xStep) * xStep;
 
     const xStep = computed(() => {
       const xSpan = xMax.value - xMin.value;
@@ -79,7 +73,6 @@ const PaneManager = defineComponent({
       () => [yLowerBound.value, yUpperBound.value] as unknown as Interval
     );
 
-    // TODO: to see if xPanes and yPanes need to be made reactive
     provide(paneInjectionKey, {
       xPanes,
       yPanes,
