@@ -7,7 +7,7 @@ import { useScaleContext } from "../view/ScaleContext";
 export type LabelMaker = (value: number) => number | string;
 
 // This is sort of a hack—every SVG pattern on a page needs a unique ID, otherwise they conflict.
-const incrementer = ref(0);
+let incrementer = 0;
 
 export type AxisOptions = {
   axis: boolean;
@@ -57,7 +57,7 @@ const CartesianCoordinates = defineComponent({
         } as AxisOptions)
     );
 
-    const id = computed(() => `mafs-grid-${incrementer.value++}`);
+    const id = `mafs-grid-${incrementer++}`;
 
     const { xPaneRange, yPaneRange } = usePaneContext();
     const { scaleX, scaleY } = useScaleContext();
@@ -74,7 +74,7 @@ const CartesianCoordinates = defineComponent({
       <>
         <defs>
           <GridPattern
-            id={id.value}
+            id={id}
             xLines={xAxis.value.lines}
             yLines={yAxis.value.lines}
             xSubdivisions={xAxis.value.subdivisions}
@@ -83,7 +83,7 @@ const CartesianCoordinates = defineComponent({
         </defs>
 
         <rect
-          fill={`url(#${id.value})`}
+          fill={`url(#${id})`}
           x={minX.value}
           y={maxY.value}
           width={maxX.value - minX.value}
@@ -187,7 +187,7 @@ const YLabels = defineComponent({
     );
 
     return () => (
-      <g className="mafs-shadow">
+      <g class="mafs-shadow">
         {ys.value
           .filter((y) => Math.abs(scaleY.value(y) - scaleY.value(0)) > 1)
           .map((y) => (
