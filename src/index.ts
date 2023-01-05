@@ -10,8 +10,14 @@ export type {
   LabelMaker,
 } from "./origin/CartesianCoordinates";
 
-// export { FunctionGraph } from "./display/FunctionGraph";
-// export type { OfXProps, ParametricProps } from "./display/FunctionGraph";
+export {
+  FunctionGraphOfX,
+  // FunctionGraphParametric
+} from "./display/FunctionGraph";
+export type {
+  OfXProps,
+  // ParametricProps
+} from "./display/FunctionGraph";
 
 // export { Line } from "./display/Line";
 // export type {
@@ -42,7 +48,7 @@ export type {
 // export { Text } from "./display/Text";
 // export type { TextProps, CardinalDirection } from "./display/Text";
 
-// export { Theme } from "./display/Theme";
+export { Theme } from "./display/Theme";
 // export type { Filled, Stroked } from "./display/Theme";
 
 // export { MovablePoint } from "./interaction/MovablePoint";
