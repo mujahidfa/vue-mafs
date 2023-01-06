@@ -33,8 +33,8 @@ export type { OfXProps, ParametricProps } from "./display/FunctionGraph";
 // export { Polygon } from "./display/Polygon";
 // export type { PolygonProps } from "./display/Polygon";
 
-// export { Point } from "./display/Point";
-// export type { PointProps } from "./display/Point";
+export { Point } from "./display/Point";
+export type { PointProps } from "./display/Point";
 
 // export { Vector } from "./display/Vector";
 // export type { VectorProps } from "./display/Vector";

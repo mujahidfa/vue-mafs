@@ -7,6 +7,7 @@ import {
   labelPi,
   Theme,
   useMovablePoint,
+  Point,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
@@ -15,6 +16,17 @@ const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
 </script>
 
 <template>
+  <Mafs>
+    <CartesianCoordinates />
+    <Point :x="1" :y="1" />
+    <Point :x="-2" :y="1" :opacity="0.5" />
+    <Point :x="1" :y="-2" :opacity="0.5" color="yellow" />
+    <Point :x="-1" :y="-3" color="red" />
+    <Point :x="0" :y="0" :opacity="0.8" color="lightgreen" />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs :viewBox="{ x: [-10, 10], y: [-2, 2] }" :preserveAspectRatio="false">
     <CartesianCoordinates
       :subdivisions="4"

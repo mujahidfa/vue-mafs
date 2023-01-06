@@ -20,6 +20,10 @@ This template should help get you started developing with Vue 3 in Vite.
 - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
 - `svgPathProps` prop is removed because Vue supports inheritable attributes by default.
 
+`<Point />`
+
+- `svgCircleProps` prop is removed because Vue supports inheritable attributes by default.
+
 ### Composition functions
 
 `useMovablePoint`
