@@ -32,15 +32,19 @@ export const CartesianCoordinates = defineComponent({
   name: "CartesianCoordinates",
   props: {
     xAxis: {
-      type: Object as PropType<Partial<AxisOptions> | false>,
+      type: [Object, Boolean] as PropType<Partial<AxisOptions> | false>,
+      default: undefined,
+      required: false,
     },
     yAxis: {
-      type: Object as PropType<Partial<AxisOptions> | false>,
+      type: [Object, Boolean] as PropType<Partial<AxisOptions> | false>,
+      default: undefined,
+      required: false,
     },
     subdivisions: {
-      type: Object as PropType<number | false>,
-      // eslint-disable-next-line vue/require-valid-default-prop
+      type: [Number, Boolean] as PropType<number | false>,
       default: false,
+      required: false,
     },
   },
   setup(props) {
