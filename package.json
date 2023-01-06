@@ -2,19 +2,45 @@
   "name": "vue-mafs",
   "version": "0.1.0",
   "description": "Vue components for interactive math, based on Mafs.",
-  "private": true,
+  "license": "MIT",
+  "author": "Mujahid Anuar (https://github.com/mujahidfa)",
+  "homepage": "https://github.com/mujahidfa/vue-boring-avatars",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mujahidfa/vue-boring-avatars"
+  },
+  "bugs": {
+    "url": "https://github.com/mujahidfa/vue-boring-avatars/issues"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vue-mafs.umd.cjs",
+  "module": "./dist/vue-mafs.js",
+  "types": "./dist/vue-mafs.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-mafs.js",
+      "require": "./dist/vue-mafs.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "pnpm run type-check && pnpm run build-only",
     "preview": "vite preview",
-    "test:unit": "vitest --environment jsdom --root src/",
-    "test:e2e": "playwright test",
-    "build-only": "vite build && vue-tsc --emitDeclarationOnly",
-    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "test-unit": "vitest --environment jsdom --root src/",
+    "test-e2e": "playwright test",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,md,vue}\" --ignore-path .gitignore",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "beautify": "pnpm run format && pnpm run lint",
+    "check-type": "vue-tsc --noEmit -p tsconfig.vitest.json",
+    "gen-type": "vue-tsc --skipLibCheck --jsx preserve --declaration --emitDeclarationOnly --outFile dist/vue-mafs.d.ts --outDir dist/ src/index.ts",
+    "build-only": "vite build && pnpm run gen-type",
+    "build": "pnpm run beautify && pnpm run check-type && pnpm run build-only && cp src/index.css dist"
   },
   "dependencies": {
     "@vueuse/core": "^9.10.0",
+    "computer-modern": "0.1.2-subsetting3",
     "tiny-invariant": "^1.3.1",
     "vuse-gesture": "^0.0.2"
   },

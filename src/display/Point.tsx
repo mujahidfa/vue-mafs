@@ -1,4 +1,4 @@
-import { computed, defineComponent, type PropType } from "vue";
+import { computed, defineComponent } from "vue";
 
 import { useScaleContext } from "../view/ScaleContext";
 import { useTransformContext } from "./Transform";

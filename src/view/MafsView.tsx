@@ -92,7 +92,7 @@ export const MafsView = defineComponent({
     const offset = ref<vec.Vector2>([0, 0]);
 
     const aoi = computed(() => {
-      const padding = props.viewBox.padding ?? 0.5;
+      const padding = (props as MafsViewProps).viewBox?.padding ?? 0.5;
       return {
         xMin: (props.viewBox?.x?.[0] ?? 0) - padding + offset.value[0],
         xMax: (props.viewBox?.x?.[1] ?? 0) + padding + offset.value[0],

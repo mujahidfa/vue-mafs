@@ -63,7 +63,7 @@ pnpm build
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh
-pnpm test:unit
+pnpm test-unit
 ```
 
 ### Run End-to-End Tests with [Playwright](https://playwright.dev)
@@ -76,13 +76,13 @@ npx playwright install
 pnpm build
 
 # Runs the end-to-end tests
-pnpm test:e2e
+pnpm test-e2e
 # Runs the tests only on Chromium
-pnpm test:e2e --project=chromium
+pnpm test-e2e --project=chromium
 # Runs the tests of a specific file
-pnpm test:e2e tests/example.spec.ts
+pnpm test-e2e tests/example.spec.ts
 # Runs the tests in debug mode
-pnpm test:e2e --debug
+pnpm test-e2e --debug
 ```
 
 ### Lint with [ESLint](https://eslint.org/)

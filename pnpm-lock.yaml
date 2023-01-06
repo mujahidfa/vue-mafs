@@ -13,6 +13,7 @@ specifiers:
   '@vue/test-utils': ^2.2.7
   '@vue/tsconfig': ^0.1.3
   '@vueuse/core': ^9.10.0
+  computer-modern: 0.1.2-subsetting3
   eslint: ^8.31.0
   eslint-plugin-vue: ^9.8.0
   jest-image-snapshot: ^6.1.0
@@ -28,6 +29,7 @@ specifiers:
 
 dependencies:
   '@vueuse/core': 9.10.0_vue@3.2.45
+  computer-modern: 0.1.2-subsetting3
   tiny-invariant: 1.3.1
   vuse-gesture: 0.0.2_vue@3.2.45
 
@@ -1359,6 +1361,10 @@ packages:
     dependencies:
       delayed-stream: 1.0.0
     dev: true
+
+  /computer-modern/0.1.2-subsetting3:
+    resolution: {integrity: sha512-SGjwjMvknG1tiTjdFoNzlivBOzNEQ7PLW/QnUoTSxS62YIUxYmeWrC0liit2XkHVWLba99pqj6CP2aI3sOYzLA==}
+    dev: false
 
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}

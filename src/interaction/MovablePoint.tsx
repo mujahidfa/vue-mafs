@@ -72,7 +72,7 @@ export const MovablePoint = defineComponent({
 
     const pickup = ref<vec.Vector2>([0, 0]);
 
-    const bind = useDrag((state) => {
+    const bind: any = useDrag((state) => {
       const { type, event } = state;
       event?.stopPropagation();
 
