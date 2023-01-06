@@ -8,14 +8,27 @@ import {
   Theme,
   useMovablePoint,
   Point,
+  LineThroughPoints,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
   constrain: "horizontal",
 });
+
+const { point: point1, element: Point1Element } = useMovablePoint([-1, -1]);
+const { point: point2, element: Point2Element } = useMovablePoint([2, 1]);
 </script>
 
 <template>
+  <Mafs :viewBox="{ y: [-1, 1] }">
+    <CartesianCoordinates />
+    <LineThroughPoints :point1="point1" :point2="point2" />
+    <Point1Element />
+    <Point2Element />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs>
     <CartesianCoordinates />
     <Point :x="1" :y="1" />

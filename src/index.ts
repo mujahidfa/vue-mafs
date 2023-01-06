@@ -16,13 +16,18 @@ export {
 } from "./display/FunctionGraph";
 export type { OfXProps, ParametricProps } from "./display/FunctionGraph";
 
-// export { Line } from "./display/Line";
-// export type {
-//   PointAngleProps,
-//   PointSlopeProps,
-//   ThroughPointsProps,
-//   SegmentProps,
-// } from "./display/Line";
+export {
+  // LinePointAngle,
+  // LinePointSlope,
+  LineThroughPoints,
+  // LineSegment,
+} from "./display/Line";
+export type {
+  // PointAngleProps,
+  // PointSlopeProps,
+  ThroughPointsProps,
+  // SegmentProps,
+} from "./display/Line";
 
 // export { Circle } from "./display/Circle";
 // export type { CircleProps } from "./display/Circle";
