@@ -12,28 +12,38 @@ import { round } from "../math";
 import * as vec from "../vec";
 
 export interface MafsViewProps {
-  width?: number | string;
+  width?: number | "auto";
   height?: number;
+  /** Whether to enable panning with the mouse and keyboard */
   pan?: boolean;
-  viewBox?: { x?: vec.Vector2; y?: vec.Vector2; padding?: number };
-  preserveAspectRatio?: "contain" | false;
-
   /**
-   * Enable rendering on the server side. If false, an empty view will still be rendered, with
-   * nothing in it.
-   *
-   * Note that server-side rendering complicated graphs can really bloat your HTML.
+   * A way to declare the "area of interest" of your visualizations. Mafs will center and zoom to
+   * this area.
    */
-  ssr?: boolean;
+  viewBox?: { x?: vec.Vector2; y?: vec.Vector2; padding?: number };
+  /**
+   * Whether to squish the graph to fill the Mafs viewport or to preserve the aspect ratio of the
+   * coordinate space.
+   */
+  preserveAspectRatio?: "contain" | false;
 }
 
 const MafsView = defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Mafs",
   props: {
-    width: { type: [Number, String], default: "auto" },
+    width: {
+      type: Object as PropType<number | "auto">,
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default: "auto",
+    },
     height: { type: Number, default: 500 },
+    /** Whether to enable panning with the mouse and keyboard */
     pan: { type: Boolean, default: true },
+    /**
+     * A way to declare the "area of interest" of your visualizations. Mafs will center and zoom to
+     * this area.
+     */
     viewBox: {
       type: Object as PropType<{
         x?: vec.Vector2;
@@ -42,8 +52,13 @@ const MafsView = defineComponent({
       }>,
       default: () => ({ x: [-3, 3], y: [-3, 3] }),
     },
+    /**
+     * Whether to squish the graph to fill the Mafs viewport or to preserve the aspect ratio of the
+     * coordinate space.
+     */
     preserveAspectRatio: {
-      type: [String, Boolean],
+      type: Object as PropType<"contain" | boolean>,
+      // eslint-disable-next-line vue/require-valid-default-prop
       default: "contain",
       validator(prop: string | boolean) {
         return ["contain", false].includes(prop);

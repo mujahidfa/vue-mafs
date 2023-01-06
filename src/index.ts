@@ -1,7 +1,7 @@
 export { default as Mafs, type MafsViewProps } from "./view/MafsView";
 
 export {
-  default as CartesianCoordinates,
+  CartesianCoordinates,
   autoPi as labelPi,
 } from "./origin/CartesianCoordinates";
 export type {
@@ -66,9 +66,7 @@ export { Theme } from "./display/Theme";
 
 export type { Interval } from "./math";
 
-import * as vec from "./vec";
-import type { Vector2, Matrix } from "./vec";
-export { vec };
-export type { Vector2, Matrix };
+export type { Vector2, Matrix } from "./vec";
+export { vec } from "./vec";
 
 // export { Transform, type TransformProps } from "./display/Transform";

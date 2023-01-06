@@ -86,7 +86,14 @@ export function scale(v: Vector2, sc: number): Vector2 {
 /**
  * Create a matrix
  */
-function matrixCreate(a = 1, b = 0, c = 0, d = 1, tx = 0, ty = 0): Matrix {
+export function matrixCreate(
+  a = 1,
+  b = 0,
+  c = 0,
+  d = 1,
+  tx = 0,
+  ty = 0
+): Matrix {
   return [a, c, tx, b, d, ty, 0, 0, 1];
 }
 
@@ -235,3 +242,25 @@ export function matrixBuilder(m: Matrix | null = null) {
     get: (): Matrix => [..._m],
   };
 }
+
+export const vec = {
+  add,
+  sub,
+  mag,
+  normal,
+  lerp,
+  normalize,
+  withMag,
+  scale,
+  matrixCreate,
+  transform,
+  matrixMult,
+  rotate,
+  rotateAbout,
+  midpoint,
+  dist,
+  dot,
+  det,
+  matrixInvert,
+  matrixBuilder,
+};

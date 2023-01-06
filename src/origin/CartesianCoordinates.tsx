@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, type PropType } from "vue";
+import { computed, defineComponent, type PropType } from "vue";
 import GridPattern from "./GridPattern.vue";
 import { range, round } from "../math";
 import { usePaneContext } from "../view/PaneManager";
@@ -23,21 +23,25 @@ const defaultAxisOptions: Partial<AxisOptions> = {
 };
 
 export interface CartesianCoordinatesProps {
-  xAxis?: Partial<AxisOptions>;
-  yAxis?: Partial<AxisOptions>;
+  xAxis?: Partial<AxisOptions> | false;
+  yAxis?: Partial<AxisOptions> | false;
   subdivisions?: number | false;
 }
 
-const CartesianCoordinates = defineComponent({
+export const CartesianCoordinates = defineComponent({
   name: "CartesianCoordinates",
   props: {
     xAxis: {
-      type: Object as PropType<Partial<AxisOptions>>,
+      type: Object as PropType<Partial<AxisOptions> | false>,
     },
     yAxis: {
-      type: Object as PropType<Partial<AxisOptions>>,
+      type: Object as PropType<Partial<AxisOptions> | false>,
     },
-    subdivisions: { type: [Number, Boolean], default: false },
+    subdivisions: {
+      type: Object as PropType<number | false>,
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default: false,
+    },
   },
   setup(props) {
     const xAxis = computed(
@@ -75,10 +79,14 @@ const CartesianCoordinates = defineComponent({
         <defs>
           <GridPattern
             id={id}
-            xLines={xAxis.value.lines}
-            yLines={yAxis.value.lines}
-            xSubdivisions={xAxis.value.subdivisions}
-            ySubdivisions={yAxis.value.subdivisions}
+            xLines={props.xAxis !== false ? xAxis.value.lines : false}
+            yLines={props.yAxis !== false ? yAxis.value.lines : false}
+            xSubdivisions={
+              props.xAxis !== false ? xAxis.value.subdivisions : false
+            }
+            ySubdivisions={
+              props.yAxis !== false ? yAxis.value.subdivisions : false
+            }
           />
         </defs>
 
@@ -90,20 +98,20 @@ const CartesianCoordinates = defineComponent({
           height={-(maxY.value - minY.value)}
         />
 
-        {xAxis.value.labels && (
+        {props.xAxis !== false && xAxis.value.labels && (
           <XLabels
             labelMaker={xAxis.value.labels}
             separation={xAxis.value.lines || 1}
           />
         )}
-        {yAxis.value.labels && (
+        {props.yAxis !== false && yAxis.value.labels && (
           <YLabels
             labelMaker={yAxis.value.labels}
             separation={yAxis.value.lines || 1}
           />
         )}
 
-        {xAxis.value.axis && (
+        {props.xAxis !== false && xAxis.value.axis && (
           <line
             x1={-10000000}
             x2={10000000}
@@ -113,7 +121,7 @@ const CartesianCoordinates = defineComponent({
           />
         )}
 
-        {yAxis.value.axis && (
+        {props.yAxis !== false && yAxis.value.axis && (
           <line
             x1={0}
             x2={0}
@@ -214,5 +222,3 @@ export function autoPi(x: number): string {
   if (Math.abs(-Math.PI - x) < 0.001) return "-π";
   return `${round(x / Math.PI, 5)}π`;
 }
-
-export default CartesianCoordinates;
