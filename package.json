@@ -36,7 +36,7 @@
     "check-type": "vue-tsc --noEmit -p tsconfig.vitest.json",
     "gen-type": "vue-tsc --skipLibCheck --jsx preserve --declaration --emitDeclarationOnly --outFile dist/vue-mafs.d.ts --outDir dist/ src/index.ts",
     "build-only": "vite build && pnpm run gen-type",
-    "build": "pnpm run beautify && pnpm run check-type && pnpm run build-only && cp src/index.css dist"
+    "build": "rm -rf dist/ && pnpm run beautify && pnpm run check-type && pnpm run build-only && cp src/index.css dist"
   },
   "dependencies": {
     "@vueuse/core": "^9.10.0",
