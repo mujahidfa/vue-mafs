@@ -20,13 +20,13 @@ export {
   // LinePointAngle,
   // LinePointSlope,
   LineThroughPoints,
-  // LineSegment,
+  LineSegment,
 } from "./display/Line";
 export type {
   // PointAngleProps,
   // PointSlopeProps,
   ThroughPointsProps,
-  // SegmentProps,
+  SegmentProps,
 } from "./display/Line";
 
 // export { Circle } from "./display/Circle";

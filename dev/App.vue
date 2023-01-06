@@ -9,6 +9,7 @@ import {
   useMovablePoint,
   Point,
   LineThroughPoints,
+  LineSegment,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
@@ -17,9 +18,21 @@ const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
 
 const { point: point1, element: Point1Element } = useMovablePoint([-1, -1]);
 const { point: point2, element: Point2Element } = useMovablePoint([2, 1]);
+
+const { point: point3, element: Point3Element } = useMovablePoint([-1, -1]);
+const { point: point4, element: Point4Element } = useMovablePoint([2, 1]);
 </script>
 
 <template>
+  <Mafs :viewBox="{ y: [-1, 1] }">
+    <CartesianCoordinates />
+    <LineSegment :point1="point3" :point2="point4" />
+    <Point3Element />
+    <Point4Element />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs :viewBox="{ y: [-1, 1] }">
     <CartesianCoordinates />
     <LineThroughPoints :point1="point1" :point2="point2" />

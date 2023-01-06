@@ -31,6 +31,8 @@ Here's a minimal project example for your reference: TODO
   - `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 - `<Point />`
   - `svgCircleProps` prop is removed and not needed because Vue supports inheritable attributes by default.
+- `<PointAngle />`, `<PointSlope />`, `<Segment />`, `<ThroughPoints />`
+  - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
 
 ### Differences in Composition functions (a.k.a. hooks in React)
 
