@@ -35,8 +35,8 @@ export type {
 // export { Ellipse } from "./display/Ellipse";
 // export type { EllipseProps } from "./display/Ellipse";
 
-// export { Polygon } from "./display/Polygon";
-// export type { PolygonProps } from "./display/Polygon";
+export { Polygon } from "./display/Polygon";
+export type { PolygonProps } from "./display/Polygon";
 
 export { Point } from "./display/Point";
 export type { PointProps } from "./display/Point";
@@ -51,7 +51,7 @@ export type { PointProps } from "./display/Point";
 // export type { TextProps, CardinalDirection } from "./display/Text";
 
 export { Theme } from "./display/Theme";
-// export type { Filled, Stroked } from "./display/Theme";
+export type { Filled, Stroked } from "./display/Theme";
 
 export { MovablePoint } from "./interaction/MovablePoint";
 export type { MovablePointProps } from "./interaction/MovablePoint";

@@ -12,6 +12,7 @@ import {
   LineSegment,
   LinePointSlope,
   LinePointAngle,
+  Polygon,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
@@ -30,9 +31,27 @@ const { y, element: SlopeElement } = useMovablePoint([0, 1], {
 });
 
 const { point: point6, element: Point6Element } = useMovablePoint([-1, -1]);
+
+const a = [2, 0] as [number, number];
+const b = [-2, 0] as [number, number];
+const {
+  x: polygonX,
+  y: polygonY,
+  point: polygonPoint,
+  element: PolygonPointElement,
+} = useMovablePoint([0, 2]);
 </script>
 
 <template>
+  <Mafs>
+    <CartesianCoordinates />
+    <Polygon :points="[[polygonX, -polygonY], a, b]" strokeStyle="dashed" />
+    <Polygon :points="[polygonPoint, a, b]" :color="Theme.blue" />
+    <PolygonPointElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs :viewBox="{ y: [-1, 1] }">
     <CartesianCoordinates />
     <LinePointAngle :point="point6" :angle="Math.PI / 6" />
