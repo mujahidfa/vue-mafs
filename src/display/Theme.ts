@@ -24,5 +24,5 @@ export interface Stroked {
   color?: string;
   opacity?: number;
   weight?: number;
-  style?: "solid" | "dashed";
+  lineStyle?: "solid" | "dashed";
 }

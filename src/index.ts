@@ -12,12 +12,9 @@ export type {
 
 export {
   FunctionGraphOfX,
-  // FunctionGraphParametric
+  FunctionGraphParametric,
 } from "./display/FunctionGraph";
-export type {
-  OfXProps,
-  // ParametricProps
-} from "./display/FunctionGraph";
+export type { OfXProps, ParametricProps } from "./display/FunctionGraph";
 
 // export { Line } from "./display/Line";
 // export type {

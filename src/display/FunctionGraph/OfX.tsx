@@ -38,7 +38,7 @@ export const OfX = defineComponent({
       default: 1,
       required: false,
     },
-    style: {
+    lineStyle: {
       type: String as PropType<"solid" | "dashed">,
       required: false,
       validator(prop: string) {
@@ -95,7 +95,7 @@ export const OfX = defineComponent({
         fill="none"
         stroke-linecap="round"
         stroke-linejoin="round"
-        strokeDasharray={props.style === "dashed" ? "3,8" : undefined}
+        stroke-dasharray={props.lineStyle === "dashed" ? "3,8" : undefined}
         transform={cssScale.value}
         style={{
           stroke: props.color || "var(--mafs-fg)",
