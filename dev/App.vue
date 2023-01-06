@@ -6,10 +6,26 @@ import {
   FunctionGraphParametric,
   labelPi,
   Theme,
+  useMovablePoint,
 } from "../src/index";
+
+const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
+  constrain: "horizontal",
+});
 </script>
 
 <template>
+  <Mafs :viewBox="{ x: [-10, 10], y: [-2, 2] }" :preserveAspectRatio="false">
+    <CartesianCoordinates
+      :subdivisions="4"
+      :xAxis="{ lines: Math.PI, labels: labelPi }"
+    />
+    <FunctionGraphOfX :y="(x: number) => Math.sin(x - phaseX)" />
+    <PhaseElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs :viewBox="{ x: [-3, 3], y: [-3, 3] }">
     <CartesianCoordinates />
     <FunctionGraphParametric

@@ -215,7 +215,6 @@ export const MafsView = defineComponent({
         style={{ width: desiredCssWidth.value }}
         tabindex={props.pan ? 0 : -1}
         ref={containerRef}
-        v-bind="normalizeProps(bind())"
         {...normalizeProps(bind())}
       >
         <PaneManager>

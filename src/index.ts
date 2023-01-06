@@ -48,15 +48,15 @@ export type { OfXProps, ParametricProps } from "./display/FunctionGraph";
 export { Theme } from "./display/Theme";
 // export type { Filled, Stroked } from "./display/Theme";
 
-// export { MovablePoint } from "./interaction/MovablePoint";
-// export type { MovablePointProps } from "./interaction/MovablePoint";
+export { MovablePoint } from "./interaction/MovablePoint";
+export type { MovablePointProps } from "./interaction/MovablePoint";
 
-// export { useMovablePoint } from "./interaction/useMovablePoint";
-// export type {
-//   ConstraintFunction,
-//   UseMovablePoint,
-//   UseMovablePointArguments,
-// } from "./interaction/useMovablePoint";
+export { useMovablePoint } from "./interaction/useMovablePoint";
+export type {
+  ConstraintFunction,
+  UseMovablePoint,
+  UseMovablePointArguments,
+} from "./interaction/useMovablePoint";
 
 // export { useStopwatch } from "./animation/useStopwatch";
 // export type { Stopwatch, StopwatchArguments } from "./animation/useStopwatch";
@@ -66,4 +66,4 @@ export type { Interval } from "./math";
 export type { Vector2, Matrix } from "./vec";
 export { vec } from "./vec";
 
-// export { Transform, type TransformProps } from "./display/Transform";
+export { Transform, type TransformProps } from "./display/Transform";
