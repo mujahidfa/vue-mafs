@@ -1,5 +1,5 @@
 import { computed, defineComponent, type PropType } from "vue";
-import GridPattern from "./GridPattern.vue";
+import { GridPattern } from "./GridPattern";
 import { range, round } from "../math";
 import { usePaneContext } from "../view/PaneManager";
 import { useScaleContext } from "../view/ScaleContext";
