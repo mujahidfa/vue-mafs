@@ -13,7 +13,7 @@ export interface ScaleContextShape {
   cssScale: Ref<string>;
 }
 
-const scaleInjectionKey = Symbol() as InjectionKey<ScaleContextShape>;
+export const scaleInjectionKey = Symbol() as InjectionKey<ScaleContextShape>;
 
 export function useScaleContext(): ScaleContextShape {
   const scaleInjection = inject(scaleInjectionKey);
@@ -24,5 +24,3 @@ export function useScaleContext(): ScaleContextShape {
 
   return scaleInjection;
 }
-
-export default scaleInjectionKey;

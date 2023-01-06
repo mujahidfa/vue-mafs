@@ -6,7 +6,7 @@ export interface MapContextShape {
   mapY: Ref<(x: number) => number>;
 }
 
-const mapInjectionKey = Symbol() as InjectionKey<MapContextShape>;
+export const mapInjectionKey = Symbol() as InjectionKey<MapContextShape>;
 
 export function useMapContext(): MapContextShape {
   const mapInjection = inject(mapInjectionKey);
@@ -17,5 +17,3 @@ export function useMapContext(): MapContextShape {
 
   return mapInjection;
 }
-
-export default mapInjectionKey;

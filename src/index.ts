@@ -1,4 +1,4 @@
-export { default as Mafs, type MafsViewProps } from "./view/MafsView";
+export { MafsView as Mafs, type MafsViewProps } from "./view/MafsView";
 
 export {
   CartesianCoordinates,

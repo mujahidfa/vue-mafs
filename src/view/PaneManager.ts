@@ -28,7 +28,7 @@ export function usePaneContext(): PaneContextShape {
   });
 }
 
-const PaneManager = defineComponent({
+export const PaneManager = defineComponent({
   name: "PaneManager",
   setup(_, { slots }) {
     const { xMin, xMax, yMin, yMax } = useCoordinateContext();
@@ -83,5 +83,3 @@ const PaneManager = defineComponent({
     return () => slots.default?.();
   },
 });
-
-export default PaneManager;

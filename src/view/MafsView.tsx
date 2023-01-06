@@ -1,13 +1,14 @@
 import { computed, defineComponent, provide, ref, type PropType } from "vue";
-import coordinateInjectionKey, {
+import {
+  coordinateInjectionKey,
   type CoordinateContextShape,
 } from "./CoordinateContext";
-import PaneManager from "./PaneManager";
-import mapInjectionKey, { type MapContextShape } from "./MapContext";
+import { PaneManager } from "./PaneManager";
+import { mapInjectionKey, type MapContextShape } from "./MapContext";
 import { useElementSize } from "@vueuse/core";
 
 import { normalizeProps, useDrag } from "vuse-gesture";
-import scaleInjectionKey, { type ScaleContextShape } from "./ScaleContext";
+import { scaleInjectionKey, type ScaleContextShape } from "./ScaleContext";
 import { round } from "../math";
 import * as vec from "../vec";
 
@@ -28,7 +29,7 @@ export interface MafsViewProps {
   preserveAspectRatio?: "contain" | false;
 }
 
-const MafsView = defineComponent({
+export const MafsView = defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Mafs",
   props: {
@@ -228,5 +229,3 @@ const MafsView = defineComponent({
     );
   },
 });
-
-export default MafsView;

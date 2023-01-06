@@ -10,7 +10,8 @@ export interface CoordinateContextShape {
   height: number;
 }
 
-const coordinateInjectionKey = Symbol() as InjectionKey<CoordinateContextShape>;
+export const coordinateInjectionKey =
+  Symbol() as InjectionKey<CoordinateContextShape>;
 
 export function useCoordinateContext(): CoordinateContextShape {
   const coordinateInjection = inject(coordinateInjectionKey);
@@ -21,5 +22,3 @@ export function useCoordinateContext(): CoordinateContextShape {
 
   return coordinateInjection;
 }
-
-export default coordinateInjectionKey;
