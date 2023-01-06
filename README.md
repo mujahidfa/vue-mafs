@@ -19,34 +19,28 @@ Here's a minimal project example for your reference: TODO
 
 ### Differences in Components
 
-`<MafsView />`
-
-- `ssr` prop is removed. It can be implemented if it's needed in Vue's SSR story (feel free to open an issue).
-
-`<FunctionGraphOfX />`
-
-- `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
-- `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
-
-`<FunctionGraphParametric />`
-
-- `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
-- `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
-
-`<Point />`
-
-- `svgCircleProps` prop is removed and not needed because Vue supports inheritable attributes by default.
+- `<MafsView />`
+  - `ssr` prop is removed. It can be implemented if it's needed in Vue's SSR story (feel free to open an issue).
+- `<FunctionGraph.OfX />` is called `<FunctionGraphOfX />` in `vue-mafs` (note the absence of the '.').
+- `<FunctionGraph.Parametric />` is called `<FunctionGraphParametric />` in `vue-mafs` (note the absence of the '.').
+- `<FunctionGraphOfX />`
+  - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
+  - `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
+- `<FunctionGraphParametric />`
+  - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
+  - `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
+- `<Point />`
+  - `svgCircleProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 
 ### Differences in Composition functions (a.k.a. hooks in React)
 
-`useMovablePoint`
-
-- It doesn't return a `setPoint`, rather a `point` ref of type `Ref<[x: number, y: number]>` that you can assign new values directly.
-  ```js
-  const { point } = useMovablePoint([0, 0]);
-  // equivalent to setPoint(newPoint) in React
-  point.value = newPoint;
-  ```
+- `useMovablePoint`
+  - It doesn't return a `setPoint`, rather a `point` ref of type `Ref<[x: number, y: number]>` that you can assign new values directly.
+    ```js
+    const { point } = useMovablePoint([0, 0]);
+    // equivalent to setPoint(newPoint) in React
+    point.value = newPoint;
+    ```
 
 ## Project Setup
 
