@@ -22,11 +22,26 @@ export interface GridPatternProps {
 export const GridPattern = defineComponent({
   name: "GridPattern",
   props: {
-    id: String,
-    xLines: Object as PropType<number | false>,
-    yLines: Object as PropType<number | false>,
-    xSubdivisions: Object as PropType<number | false>,
-    ySubdivisions: Object as PropType<number | false>,
+    id: {
+      type: String,
+      required: true,
+    },
+    xLines: {
+      type: [Number, Boolean] as PropType<number | false>,
+      required: true,
+    },
+    yLines: {
+      type: [Number, Boolean] as PropType<number | false>,
+      required: true,
+    },
+    xSubdivisions: {
+      type: [Number, Boolean] as PropType<number | false>,
+      required: true,
+    },
+    ySubdivisions: {
+      type: [Number, Boolean] as PropType<number | false>,
+      required: true,
+    },
   },
   setup(props) {
     const { scaleX, scaleY } = useScaleContext();
@@ -51,6 +66,7 @@ export const GridPattern = defineComponent({
         return [];
       }
     });
+
     return () => (
       <pattern
         id={props.id}

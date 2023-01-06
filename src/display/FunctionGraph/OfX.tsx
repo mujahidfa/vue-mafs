@@ -23,10 +23,10 @@ export const OfX = defineComponent({
     quality: {
       type: String as PropType<"low" | "medium" | "high">,
       default: "low",
+      required: false,
       validator(prop: string) {
         return ["low", "medium", "high"].includes(prop);
       },
-      required: false,
     },
     weight: {
       type: Number,

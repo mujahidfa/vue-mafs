@@ -34,13 +34,21 @@ export const MafsView = defineComponent({
   name: "Mafs",
   props: {
     width: {
-      type: Object as PropType<number | "auto">,
-      // eslint-disable-next-line vue/require-valid-default-prop
+      type: [Number, String] as PropType<number | "auto">,
       default: "auto",
+      required: false,
     },
-    height: { type: Number, default: 500 },
+    height: {
+      type: Number,
+      default: 500,
+      required: false,
+    },
     /** Whether to enable panning with the mouse and keyboard */
-    pan: { type: Boolean, default: true },
+    pan: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
     /**
      * A way to declare the "area of interest" of your visualizations. Mafs will center and zoom to
      * this area.
@@ -52,15 +60,16 @@ export const MafsView = defineComponent({
         padding?: number;
       }>,
       default: () => ({ x: [-3, 3], y: [-3, 3] }),
+      required: false,
     },
     /**
      * Whether to squish the graph to fill the Mafs viewport or to preserve the aspect ratio of the
      * coordinate space.
      */
     preserveAspectRatio: {
-      type: Object as PropType<"contain" | boolean>,
-      // eslint-disable-next-line vue/require-valid-default-prop
+      type: [String, Boolean] as PropType<"contain" | boolean>,
       default: "contain",
+      required: false,
       validator(prop: string | boolean) {
         return ["contain", false].includes(prop);
       },
