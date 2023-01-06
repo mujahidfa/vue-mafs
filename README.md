@@ -1,10 +1,23 @@
-# mafs-vue
+# vue-mafs
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue components for creating interactive math visualizations, based on [Mafs](https://github.com/stevenpetryk/mafs).
 
-## Differences with Mafs React
+## Installation
 
-### Components
+```sh
+# Pick your poison (pnpm, npm, yarn):
+pnpm install vue-mafs
+npm install vue-mafs
+yarn add vue-mafs
+```
+
+Here's a minimal project example for your reference: TODO
+
+## Differences with Mafs
+
+`vue-mafs` aims to have API compatibility as close with [Mafs](https://github.com/stevenpetryk/mafs) as possible, with the following differences due to how Vue works:
+
+### Differences in Components
 
 `<MafsView />`
 
@@ -13,18 +26,18 @@ This template should help get you started developing with Vue 3 in Vite.
 `<FunctionGraphOfX />`
 
 - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
-- `svgPathProps` prop is removed because Vue supports inheritable attributes by default.
+- `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 
 `<FunctionGraphParametric />`
 
 - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
-- `svgPathProps` prop is removed because Vue supports inheritable attributes by default.
+- `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 
 `<Point />`
 
-- `svgCircleProps` prop is removed because Vue supports inheritable attributes by default.
+- `svgCircleProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 
-### Composition functions
+### Differences in Composition functions (a.k.a. hooks in React)
 
 `useMovablePoint`
 
