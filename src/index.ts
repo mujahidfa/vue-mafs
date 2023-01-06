@@ -17,14 +17,14 @@ export {
 export type { OfXProps, ParametricProps } from "./display/FunctionGraph";
 
 export {
-  // LinePointAngle,
-  // LinePointSlope,
+  LinePointAngle,
+  LinePointSlope,
   LineThroughPoints,
   LineSegment,
 } from "./display/Line";
 export type {
-  // PointAngleProps,
-  // PointSlopeProps,
+  PointAngleProps,
+  PointSlopeProps,
   ThroughPointsProps,
   SegmentProps,
 } from "./display/Line";

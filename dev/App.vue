@@ -10,6 +10,8 @@ import {
   Point,
   LineThroughPoints,
   LineSegment,
+  LinePointSlope,
+  LinePointAngle,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
@@ -21,9 +23,33 @@ const { point: point2, element: Point2Element } = useMovablePoint([2, 1]);
 
 const { point: point3, element: Point3Element } = useMovablePoint([-1, -1]);
 const { point: point4, element: Point4Element } = useMovablePoint([2, 1]);
+
+const { point: point5, element: Point5Element } = useMovablePoint([-1, -1]);
+const { y, element: SlopeElement } = useMovablePoint([0, 1], {
+  constrain: "vertical",
+});
+
+const { point: point6, element: Point6Element } = useMovablePoint([-1, -1]);
 </script>
 
 <template>
+  <Mafs :viewBox="{ y: [-1, 1] }">
+    <CartesianCoordinates />
+    <LinePointAngle :point="point6" :angle="Math.PI / 6" />
+    <Point6Element />
+  </Mafs>
+
+  <div class="divider"></div>
+
+  <Mafs :viewBox="{ y: [-1, 1] }">
+    <CartesianCoordinates />
+    <LinePointSlope :point="point5" :slope="y" />
+    <Point5Element />
+    <SlopeElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs :viewBox="{ y: [-1, 1] }">
     <CartesianCoordinates />
     <LineSegment :point1="point3" :point2="point4" />

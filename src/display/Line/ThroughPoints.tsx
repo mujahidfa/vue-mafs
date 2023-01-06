@@ -21,7 +21,6 @@ export const ThroughPoints = defineComponent({
       type: Object as PropType<vec.Vector2>,
       required: true,
     },
-
     color: {
       type: String,
       default: Theme.foreground,
