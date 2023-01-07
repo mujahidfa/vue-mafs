@@ -47,8 +47,8 @@ export type { PointProps } from "./display/Point";
 // export { VectorField } from "./display/VectorField";
 // export type { VectorFieldProps } from "./display/VectorField";
 
-// export { Text } from "./display/Text";
-// export type { TextProps, CardinalDirection } from "./display/Text";
+export { Text } from "./display/Text";
+export type { TextProps, CardinalDirection } from "./display/Text";
 
 export { Theme } from "./display/Theme";
 export type { Filled, Stroked } from "./display/Theme";

@@ -18,6 +18,7 @@ import {
   vec,
   Ellipse,
   Transform,
+  Text,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
@@ -83,9 +84,28 @@ const { point: pointOnCircle, element: PointOnCircleElement } = useMovablePoint(
   [Math.sqrt(2) / 2, Math.sqrt(2) / 2]
 );
 const r = computed(() => vec.mag(pointOnCircle.value));
+
+const {
+  x: textPointX,
+  y: textPointY,
+  element: TextPointElement,
+} = useMovablePoint([1, 1]);
 </script>
 
 <template>
+  <Mafs :viewBox="{ y: [0, 2], x: [-3, 5] }">
+    <CartesianCoordinates />
+    <Text :x="textPointX" :y="textPointY" attach="w" :attachDistance="15">
+      ({{ textPointX.toFixed(3) }}, {{ textPointY.toFixed(3) }})
+    </Text>
+    <Text :x="textPointX" :y="textPointY" attach="e" :attachDistance="15">
+      ({{ textPointX.toFixed(3) }}, {{ textPointY.toFixed(3) }})
+    </Text>
+    <TextPointElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs :viewBox="{ y: [-2, 2] }">
     <CartesianCoordinates />
     <Circle :center="[0, 0]" :radius="r" />
