@@ -20,6 +20,7 @@ import {
   Transform,
   Text,
   Vector,
+  VectorField,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
@@ -106,9 +107,32 @@ const vec2 = computed(() =>
 const vec3 = computed(() =>
   vec.add(vec1.value, vec.rotate(vec2.value, -2 * tipAngle.value))
 );
+
+const {
+  x: vectorPointX,
+  y: vectorPointY,
+  element: VectorPointElement,
+} = useMovablePoint([0.6, 0.6]);
 </script>
 
 <template>
+  <Mafs>
+    <CartesianCoordinates :subdivisions="2" />
+    <VectorField
+      :xy="
+        (x, y) => [
+          y - vectorPointY - (x - vectorPointX),
+          -(x - vectorPointX) - (y - vectorPointY),
+        ]
+      "
+      :step="0.5"
+      :xyOpacity="(x, y) => (Math.abs(x) + Math.abs(y)) / 10"
+    />
+    <VectorPointElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs>
     <CartesianCoordinates />
     <Vector :tip="vec1" lineStyle="dashed" />

@@ -44,8 +44,8 @@ export type { PointProps } from "./display/Point";
 export { Vector } from "./display/Vector";
 export type { VectorProps } from "./display/Vector";
 
-// export { VectorField } from "./display/VectorField";
-// export type { VectorFieldProps } from "./display/VectorField";
+export { VectorField } from "./display/VectorField";
+export type { VectorFieldProps } from "./display/VectorField";
 
 export { Text } from "./display/Text";
 export type { TextProps, CardinalDirection } from "./display/Text";
