@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import {
   Mafs,
   CartesianCoordinates,
@@ -13,6 +14,10 @@ import {
   LinePointSlope,
   LinePointAngle,
   Polygon,
+  Circle,
+  vec,
+  Ellipse,
+  Transform,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
@@ -40,9 +45,88 @@ const {
   point: polygonPoint,
   element: PolygonPointElement,
 } = useMovablePoint([0, 2]);
+
+///////
+const hintRadius = 3;
+
+// This center point translates everything else.
+const { point: translatePoint, element: TranslatePoint } = useMovablePoint(
+  [0, 0],
+  {
+    color: Theme.orange,
+  }
+);
+
+// This outer point rotates the ellipse, and
+// is also translated by the center point.
+const { point: rotatePoint, element: RotateElement } = useMovablePoint(
+  [hintRadius, 0],
+  {
+    color: Theme.blue,
+    // Constrain this point to only move in a circle
+    constrain: (position) => vec.scale(vec.normalize(position), hintRadius),
+  }
+);
+const angle = computed(() =>
+  Math.atan2(rotatePoint.value[1], rotatePoint.value[0])
+);
+
+const { x: widthX, element: WidthElement } = useMovablePoint([-2, 0], {
+  constrain: "horizontal",
+});
+const { y: heightY, element: HeightElement } = useMovablePoint([0, 1], {
+  constrain: "vertical",
+});
+///////
+
+const { point: pointOnCircle, element: PointOnCircleElement } = useMovablePoint(
+  [Math.sqrt(2) / 2, Math.sqrt(2) / 2]
+);
+const r = computed(() => vec.mag(pointOnCircle.value));
 </script>
 
 <template>
+  <Mafs :viewBox="{ y: [-2, 2] }">
+    <CartesianCoordinates />
+    <Circle :center="[0, 0]" :radius="r" />
+    <PointOnCircleElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
+  <Mafs :viewBox="{ x: [-3, 3], y: [-3, 3] }">
+    <CartesianCoordinates />
+
+    <Transform :translate="translatePoint">
+      <Transform :rotate="angle">
+        <!-- 
+          Display a little hint that the
+          point is meant to move radially 
+        -->
+        <Circle
+          :center="[0, 0]"
+          :radius="hintRadius"
+          strokeStyle="dashed"
+          :strokeOpacity="0.3"
+          :fillOpacity="0"
+        />
+
+        <Ellipse
+          :center="[0, 0]"
+          :radius="[Math.abs(widthX), Math.abs(heightY)]"
+        />
+
+        <WidthElement /> <HeightElement />
+      </Transform>
+
+      <RotateElement />
+    </Transform>
+
+    <TranslatePoint />
+  </Mafs>
+
+  <div className="divider"></div>
+
   <Mafs>
     <CartesianCoordinates />
     <Polygon :points="[[polygonX, -polygonY], a, b]" strokeStyle="dashed" />

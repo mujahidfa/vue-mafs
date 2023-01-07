@@ -29,11 +29,11 @@ export type {
   SegmentProps,
 } from "./display/Line";
 
-// export { Circle } from "./display/Circle";
-// export type { CircleProps } from "./display/Circle";
+export { Circle } from "./display/Circle";
+export type { CircleProps } from "./display/Circle";
 
-// export { Ellipse } from "./display/Ellipse";
-// export type { EllipseProps } from "./display/Ellipse";
+export { Ellipse } from "./display/Ellipse";
+export type { EllipseProps } from "./display/Ellipse";
 
 export { Polygon } from "./display/Polygon";
 export type { PolygonProps } from "./display/Polygon";
