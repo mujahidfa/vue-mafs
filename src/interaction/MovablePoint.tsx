@@ -57,10 +57,12 @@ export const MovablePoint = defineComponent({
     const { xSpan, ySpan, pixelMatrix, inversePixelMatrix } = useScaleContext();
 
     const transform = useTransformContext();
-    const inverseTransform = computed(() => getInverseTransform(transform));
+    const inverseTransform = computed(() =>
+      getInverseTransform(transform.value)
+    );
 
     const combinedTransform = computed(() =>
-      vec.matrixMult(pixelMatrix.value, transform)
+      vec.matrixMult(pixelMatrix.value, transform.value)
     );
 
     const dragging = ref(false);
@@ -99,7 +101,10 @@ export const MovablePoint = defineComponent({
           const testMovement = vec.scale(direction, dx);
           const testPoint = props.constrain(
             vec.transform(
-              vec.add(vec.transform(props.point, transform), testMovement),
+              vec.add(
+                vec.transform(props.point, transform.value),
+                testMovement
+              ),
               inverseTransform.value
             )
           );
@@ -114,7 +119,7 @@ export const MovablePoint = defineComponent({
 
         dragging.value = !last;
 
-        if (first) pickup.value = vec.transform(props.point, transform);
+        if (first) pickup.value = vec.transform(props.point, transform.value);
         if (vec.mag(pixelMovement) === 0) return;
 
         const movement = vec.transform(pixelMovement, inversePixelMatrix.value);

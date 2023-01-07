@@ -49,7 +49,7 @@ export const ThroughPoints = defineComponent({
     const { pixelMatrix } = useScaleContext();
     const transformContext = useTransformContext();
     const transform = computed(() =>
-      vec.matrixMult(pixelMatrix.value, transformContext)
+      vec.matrixMult(pixelMatrix.value, transformContext.value)
     );
     const segment = computed(() =>
       vec.scale(vec.normalize(vec.sub(props.point2, props.point1)), 100000)

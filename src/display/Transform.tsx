@@ -3,8 +3,10 @@ import {
   defineComponent,
   inject,
   provide,
+  ref,
   type InjectionKey,
   type PropType,
+  type Ref,
 } from "vue";
 import * as vec from "../vec";
 
@@ -16,10 +18,11 @@ export interface TransformProps {
   shear?: vec.Vector2;
 }
 
-export const transformInjectionKey = Symbol() as InjectionKey<vec.Matrix>;
+export const transformInjectionKey = Symbol() as InjectionKey<Ref<vec.Matrix>>;
 
 export function useTransformContext() {
-  return inject(transformInjectionKey, vec.matrixBuilder().get());
+  const transform = ref(vec.matrixBuilder().get());
+  return inject(transformInjectionKey, transform);
 }
 
 export const Transform = defineComponent({
@@ -80,12 +83,12 @@ export const Transform = defineComponent({
         }
       }
 
-      builder = builder.mult(existingTransform);
+      builder = builder.mult(existingTransform.value);
 
       return builder.get();
     });
 
-    provide(transformInjectionKey, newTransform.value);
+    provide(transformInjectionKey, newTransform);
 
     return () => slots.default?.();
   },

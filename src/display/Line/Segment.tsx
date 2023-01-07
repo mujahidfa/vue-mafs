@@ -49,7 +49,7 @@ export const Segment = defineComponent({
     const { pixelMatrix } = useScaleContext();
     const transformContext = useTransformContext();
     const transform = computed(() =>
-      vec.matrixMult(pixelMatrix.value, transformContext)
+      vec.matrixMult(pixelMatrix.value, transformContext.value)
     );
 
     const scaledPoint1 = computed(() =>

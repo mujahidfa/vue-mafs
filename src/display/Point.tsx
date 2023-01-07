@@ -26,7 +26,7 @@ export const Point = defineComponent({
     const coor = computed(() =>
       vec.transform(
         [props.x, props.y],
-        vec.matrixMult(pixelMatrix.value, transform)
+        vec.matrixMult(pixelMatrix.value, transform.value)
       )
     );
 

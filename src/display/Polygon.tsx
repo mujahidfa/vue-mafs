@@ -50,7 +50,7 @@ export const Polygon = defineComponent({
 
     const scaledPoints = computed(() =>
       props.points
-        .map((point) => vec.transform(point, transform).join(" "))
+        .map((point) => vec.transform(point, transform.value).join(" "))
         .join(" ")
     );
 
