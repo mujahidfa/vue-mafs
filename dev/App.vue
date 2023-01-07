@@ -113,9 +113,50 @@ const {
   y: vectorPointY,
   element: VectorPointElement,
 } = useMovablePoint([0.6, 0.6]);
+
+const { point: tPoint, element: TElement } = useMovablePoint([-4, -2]);
+const { point: sPoint, element: SElement } = useMovablePoint([8, 4], {
+  color: Theme.blue,
+});
+const { point: rPoint, element: RElement } = useMovablePoint([1, 0], {
+  color: Theme.green,
+  constrain: (p) => vec.normalize(p),
+});
+const transformAngle = computed(() =>
+  Math.atan2(rPoint.value[1], rPoint.value[0])
+);
 </script>
 
 <template>
+  <Mafs :viewBox="{ x: [-8, 8], y: [-3, 3] }">
+    <CartesianCoordinates />
+
+    <Transform :translate="tPoint">
+      <Transform :rotate="transformAngle">
+        <Transform :scale="sPoint">
+          <Polygon
+            :points="[
+              [0, 0],
+              [1, 0],
+              [1, 1],
+              [0, 1],
+            ]"
+          />
+          <Circle :center="[0.5, 0.5]" :radius="0.5" />
+          <Text :x="0.5" :y="0.5"> Hello world! </Text>
+        </Transform>
+
+        <SElement />
+      </Transform>
+
+      <RElement />
+    </Transform>
+
+    <TElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs>
     <CartesianCoordinates :subdivisions="2" />
     <VectorField
