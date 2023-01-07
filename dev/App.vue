@@ -19,6 +19,7 @@ import {
   Ellipse,
   Transform,
   Text,
+  Vector,
 } from "../src/index";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
@@ -90,9 +91,35 @@ const {
   y: textPointY,
   element: TextPointElement,
 } = useMovablePoint([1, 1]);
+
+const {
+  point: tipPoint,
+  x: tipX,
+  y: tipY,
+  element: TipElement,
+} = useMovablePoint([0.4, 0.6]);
+const vec1 = computed(() => tipPoint.value);
+const tipAngle = computed(() => Math.atan2(tipY.value, tipX.value));
+const vec2 = computed(() =>
+  vec.add(vec1.value, vec.rotate(vec1.value, tipAngle.value))
+);
+const vec3 = computed(() =>
+  vec.add(vec1.value, vec.rotate(vec2.value, -2 * tipAngle.value))
+);
 </script>
 
 <template>
+  <Mafs>
+    <CartesianCoordinates />
+    <Vector :tip="vec1" lineStyle="dashed" />
+    <Vector :tail="vec1" :tip="vec2" />
+    <Vector :tail="vec2" :tip="vec3" />
+
+    <TipElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs :viewBox="{ y: [0, 2], x: [-3, 5] }">
     <CartesianCoordinates />
     <Text :x="textPointX" :y="textPointY" attach="w" :attachDistance="15">

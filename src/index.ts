@@ -41,8 +41,8 @@ export type { PolygonProps } from "./display/Polygon";
 export { Point } from "./display/Point";
 export type { PointProps } from "./display/Point";
 
-// export { Vector } from "./display/Vector";
-// export type { VectorProps } from "./display/Vector";
+export { Vector } from "./display/Vector";
+export type { VectorProps } from "./display/Vector";
 
 // export { VectorField } from "./display/VectorField";
 // export type { VectorFieldProps } from "./display/VectorField";

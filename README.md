@@ -49,6 +49,8 @@ Here's a minimal project example for your reference: TODO
   - `svgPolygonProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 - `<Text />`:
   - `svgTextProps` prop is removed and not needed because Vue supports inheritable attributes by default.
+- `<Vector />`:
+  - `svgLineProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 
 ### Differences in Composition functions (a.k.a. hooks in React)
 
