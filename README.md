@@ -15,32 +15,46 @@ Here's a minimal project example for your reference: TODO
 
 ## Differences with Mafs
 
-`vue-mafs` aims to have API compatibility as close with [Mafs](https://github.com/stevenpetryk/mafs) as possible, with the following differences due to how Vue works:
+`vue-mafs` aims to have API compatibility as close to [Mafs](https://github.com/stevenpetryk/mafs) as possible. However, there are differences due to how Vue works:
 
-### Differences in Components
+### Component renames (note the absence of the `.`):
 
-- `<MafsView />`
+| `Mafs` name                    | `vue-mafs` name               |
+| ------------------------------ | ----------------------------- |
+| `<FunctionGraph.OfX />`        | `<FunctionGraphOfX />`        |
+| `<FunctionGraph.Parametric />` | `<FunctionGraphParametric />` |
+| `<Line.PointAngle />`          | `<LinePointAngle />`          |
+| `<Line.PointSlope />`          | `<LinePointSlope />`          |
+| `<Line.Segment />`             | `<LineSegment />`             |
+| `<Line.ThroughPoints />`       | `<LineThroughPoints />`       |
+
+### Props differences:
+
+- `<Mafs />`
   - `ssr` prop is removed. It can be implemented if it's needed in Vue's SSR story (feel free to open an issue).
-- `<FunctionGraph.OfX />` is called `<FunctionGraphOfX />` in `vue-mafs` (note the absence of the '.').
-- `<FunctionGraph.Parametric />` is called `<FunctionGraphParametric />` in `vue-mafs` (note the absence of the '.').
-- `<FunctionGraphOfX />`
+- `<FunctionGraphOfX />`:
   - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
   - `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
-- `<FunctionGraphParametric />`
+- `<FunctionGraphParametric />`:
   - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
   - `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
-- `<Point />`
-  - `svgCircleProps` prop is removed and not needed because Vue supports inheritable attributes by default.
-- `<LinePointAngle />`, `<LinePointSlope />`, `<LineSegment />`, `<LineThroughPoints />`
+- `<LinePointAngle />`, `<LinePointSlope />`, `<LineSegment />`, `<LineThroughPoints />`:
   - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
-- `<Polygon />`
-  - `svgPolygonProps` prop is removed and not needed because Vue supports inheritable attributes by default.
-- `<Ellipse />` and `<Circle />`
+- `<Circle />` and `<Ellipse />`:
+  - `style` prop is renamed to `strokeStyle` so that it doesn't clash with the `style` attribute.
   - `svgEllipseProps` prop is removed and not needed because Vue supports inheritable attributes by default.
+- `<Point />`:
+  - `svgCircleProps` prop is removed and not needed because Vue supports inheritable attributes by default.
+- `<Polygon />`:
+  - `svgPolygonProps` prop is removed and not needed because Vue supports inheritable attributes by default.
+- `<Text />`:
+  - `svgTextProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 
 ### Differences in Composition functions (a.k.a. hooks in React)
 
-- `useMovablePoint`
+Compositions/hooks in `vue-mafs` return reactive values (ref() or computed()), which allows you to watch their changes reactively.
+
+- `useMovablePoint()`:
   - It doesn't return a `setPoint`, rather a `point` ref of type `Ref<[x: number, y: number]>` that you can assign new values directly.
     ```js
     const { point } = useMovablePoint([0, 0]);
