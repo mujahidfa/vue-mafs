@@ -26,6 +26,10 @@ import {
 import range from "lodash/range";
 import SnapPoint from "./SnapPoint.vue";
 import DynamicMovablePoints from "./DynamicMovablePoints";
+import BezierCurves from "./BezierCurves";
+import RiemannSum from "./RiemannSum";
+import FancyParabola from "./FancyParabola.vue";
+import ProjectileMotion from "./ProjectileMotion";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
   constrain: "horizontal",
@@ -150,6 +154,22 @@ onMounted(() => {
 </script>
 
 <template>
+  <ProjectileMotion />
+
+  <div class="divider"></div>
+
+  <FancyParabola />
+
+  <div class="divider"></div>
+
+  <RiemannSum />
+
+  <div class="divider"></div>
+
+  <BezierCurves />
+
+  <div class="divider"></div>
+
   <Mafs>
     <CartesianCoordinates />
     <Point
