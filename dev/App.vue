@@ -22,6 +22,9 @@ import {
   Vector,
   VectorField,
 } from "../src/index";
+import range from "lodash/range";
+import SnapPoint from "./SnapPoint.vue";
+import DynamicMovablePoints from "./DynamicMovablePoints";
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
   constrain: "horizontal",
@@ -125,9 +128,40 @@ const { point: rPoint, element: RElement } = useMovablePoint([1, 0], {
 const transformAngle = computed(() =>
   Math.atan2(rPoint.value[1], rPoint.value[0])
 );
+
+const fn = (x: number) => (x / 2) ** 2;
+const { x: sepX, element: SepElement } = useMovablePoint([1, 0], {
+  constrain: "horizontal",
+});
+
+const points = computed(() =>
+  sepX.value != 0
+    ? range(0, 10 * sepX.value, sepX.value).concat(
+        range(0, -10 * sepX.value, -sepX.value)
+      )
+    : []
+);
 </script>
 
 <template>
+  <DynamicMovablePoints />
+
+  <div class="divider"></div>
+
+  <SnapPoint />
+
+  <div class="divider"></div>
+
+  <Mafs :viewBox="{ x: [0, 0], y: [-1.3, 4.7] }">
+    <CartesianCoordinates />
+
+    <FunctionGraphOfX :y="fn" :opacity="0.25" />
+    <Point v-for="(x, index) in points" :x="x" :y="fn(x)" :key="index" />
+    <SepElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <Mafs :viewBox="{ x: [-8, 8], y: [-3, 3] }">
     <CartesianCoordinates />
 

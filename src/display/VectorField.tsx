@@ -1,10 +1,4 @@
-import {
-  computed,
-  defineComponent,
-  watchEffect,
-  type PropType,
-  type Ref,
-} from "vue";
+import { computed, defineComponent, type PropType } from "vue";
 import { clamp } from "../math";
 import * as vec from "../vec";
 import { usePaneContext } from "../view/PaneManager";
