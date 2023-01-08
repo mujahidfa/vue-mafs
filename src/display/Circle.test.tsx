@@ -4,6 +4,7 @@ import renderToImage from "../tests/renderToImage";
 describe("<Circle />", () => {
   it("Renders", async () => {
     expect(
+      // @ts-ignore
       await renderToImage(
         <>
           <Circle radius={0.25} center={[1, 1]} />

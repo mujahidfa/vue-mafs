@@ -39,7 +39,6 @@ export default async function renderToImage(
 
           <body>
             <Mafs
-              ssr={true}
               width={500}
               height={500}
               viewBox={{ x: [0, 10], y: [0, 10] }}

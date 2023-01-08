@@ -5,6 +5,7 @@ describe("<VectorField />", () => {
   it("Renders", async () => {
     const a = { x: 5.1, y: 5.1 };
     expect(
+      // @ts-ignore
       await renderToImage(
         <VectorField
           xy={(x, y) => [y - a.y - (x - a.x), -(x - a.x) - (y - a.y)]}
@@ -16,6 +17,7 @@ describe("<VectorField />", () => {
 
   it("Supports opacity functions", async () => {
     expect(
+      // @ts-ignore
       await renderToImage(
         <VectorField
           xy={() => [0.5, 0.5]}

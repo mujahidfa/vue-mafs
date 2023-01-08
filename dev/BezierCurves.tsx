@@ -183,7 +183,7 @@ const BezierCurves = defineComponent({
             step={0.005}
             value={t.value}
             onInput={(event) => {
-              t.value = +event.target.value;
+              t.value = +(event.target as HTMLInputElement).value;
             }}
           />
         </div>

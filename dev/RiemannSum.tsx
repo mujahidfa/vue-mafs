@@ -111,7 +111,7 @@ const RiemannSum = defineComponent({
             max={200}
             value={numPartitions}
             onInput={(event) => {
-              numPartitions.value = +event.target.value;
+              numPartitions.value = +(event.target as HTMLInputElement).value;
             }}
           />
         </div>

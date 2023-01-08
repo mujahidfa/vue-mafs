@@ -4,6 +4,7 @@ import renderToImage from "../tests/renderToImage";
 describe("<Ellipse />", () => {
   it("Renders", async () => {
     expect(
+      // @ts-ignore
       await renderToImage(
         <>
           <Ellipse radius={[0.25, 0.5]} center={[1, 1]} />
@@ -21,7 +22,8 @@ describe("<Ellipse />", () => {
             strokeStyle="dashed"
             color="red"
           />
-        </>
+        </>,
+        {}
       )
     ).toMatchImageSnapshot();
   });
