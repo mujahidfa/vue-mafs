@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import {
   Mafs,
   CartesianCoordinates,
@@ -21,6 +21,7 @@ import {
   Text,
   Vector,
   VectorField,
+  useStopwatch,
 } from "../src/index";
 import range from "lodash/range";
 import SnapPoint from "./SnapPoint.vue";
@@ -141,9 +142,24 @@ const points = computed(() =>
       )
     : []
 );
+
+const { time, start } = useStopwatch();
+onMounted(() => {
+  start();
+});
 </script>
 
 <template>
+  <Mafs>
+    <CartesianCoordinates />
+    <Point
+      :x="Math.cos(time * 2 * Math.PI)"
+      :y="Math.sin(time * 2 * Math.PI)"
+    />
+  </Mafs>
+
+  <div class="divider"></div>
+
   <DynamicMovablePoints />
 
   <div class="divider"></div>

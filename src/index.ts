@@ -63,8 +63,8 @@ export type {
   UseMovablePointArguments,
 } from "./interaction/useMovablePoint";
 
-// export { useStopwatch } from "./animation/useStopwatch";
-// export type { Stopwatch, StopwatchArguments } from "./animation/useStopwatch";
+export { useStopwatch } from "./animation/useStopwatch";
+export type { Stopwatch, StopwatchArguments } from "./animation/useStopwatch";
 
 export type { Interval } from "./math";
 
