@@ -25,7 +25,8 @@ describe("<Circle />", () => {
           <Circle
             radius={0.5}
             center={[6, 6]}
-            svgEllipseProps={{ strokeDasharray: "9 10" }}
+            stroke-dasharray="9 10"
+            // svgEllipseProps={{ strokeDasharray: "9 10" }}
           />
         </>
       )
