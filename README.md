@@ -52,9 +52,30 @@ Here's a minimal project example for your reference: TODO
 - `<Vector />`:
   - `svgLineProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 
-### Differences in Composition functions (a.k.a. hooks in React)
+### Differences in Composables (a.k.a. hooks in React)
 
-Compositions/hooks in `vue-mafs` return reactive values (ref() or computed()), which allows you to watch their changes reactively.
+Composables/hooks in `vue-mafs` return reactive values (ref() or computed()), which allows you to watch their changes reactively.
+
+For example, in `useMovablePoint`,
+
+```vue
+<script setup lang="ts">
+import { useMovablePoint } from "vue-mafs";
+import { watchEffect } from "vue";
+
+const { point } = useMovablePoint([0, 0]);
+
+function setNewPointValue(newPoint) {
+  // equivalent to setPoint(newPoint) in React
+  point.value = newPoint;
+}
+
+watchEffect(() => {
+  // Will print out point everytime there's a change to point
+  console.log(point.value);
+});
+</script>
+```
 
 - `useMovablePoint()`:
   - It doesn't return a `setPoint`, rather a `point` ref of type `Ref<[x: number, y: number]>` that you can assign new values directly.
