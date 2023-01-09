@@ -1,6 +1,6 @@
 import {
   CartesianCoordinates,
-  FunctionGraphParametric,
+  PlotParametric,
   LineSegment,
   Mafs,
   Point,
@@ -134,7 +134,7 @@ const BezierCurves = defineComponent({
           {drawPoints([lerp12.value, lerp23.value], Theme.yellow)}
 
           {/* Quadratic bezier lerp  */}
-          <FunctionGraphParametric
+          <PlotParametric
             t={[0, t.value]}
             weight={3}
             xy={(t) =>
@@ -148,7 +148,7 @@ const BezierCurves = defineComponent({
             }
           />
           {/* Show remaining bezier with dashed line  */}
-          <FunctionGraphParametric
+          <PlotParametric
             // Iterate backwards so that dashes don't move
             t={[1, t.value]}
             weight={3}

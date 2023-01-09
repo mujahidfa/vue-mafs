@@ -3,8 +3,9 @@ import { computed, onMounted } from "vue";
 import {
   Mafs,
   CartesianCoordinates,
-  FunctionGraphOfX,
-  FunctionGraphParametric,
+  PlotOfX,
+  PlotOfY,
+  PlotParametric,
   labelPi,
   Theme,
   useMovablePoint,
@@ -20,7 +21,7 @@ import {
   Transform,
   Text,
   Vector,
-  VectorField,
+  PlotVectorField,
   useStopwatch,
 } from "vue-mafs";
 import range from "lodash/range";
@@ -30,6 +31,8 @@ import BezierCurves from "./BezierCurves";
 import RiemannSum from "./RiemannSum";
 import FancyParabola from "./FancyParabola.vue";
 import ProjectileMotion from "./ProjectileMotion";
+
+const sigmoid1 = (x: number) => 2 / (1 + Math.exp(-x)) - 1;
 
 const { x: phaseX, element: PhaseElement } = useMovablePoint([0, 0], {
   constrain: "horizontal",
@@ -191,7 +194,7 @@ onMounted(() => {
   <Mafs :viewBox="{ x: [0, 0], y: [-1.3, 4.7] }">
     <CartesianCoordinates />
 
-    <FunctionGraphOfX :y="fn" :opacity="0.25" />
+    <PlotOfX :y="fn" :opacity="0.25" />
     <Point v-for="(x, index) in points" :x="x" :y="fn(x)" :key="index" />
     <SepElement />
   </Mafs>
@@ -229,15 +232,15 @@ onMounted(() => {
 
   <Mafs>
     <CartesianCoordinates :subdivisions="2" />
-    <VectorField
+    <PlotVectorField
       :xy="
-        (x, y) => [
+        ([x, y]) => [
           y - vectorPointY - (x - vectorPointX),
           -(x - vectorPointX) - (y - vectorPointY),
         ]
       "
       :step="0.5"
-      :xyOpacity="(x, y) => (Math.abs(x) + Math.abs(y)) / 10"
+      :xyOpacity="([x, y]) => (Math.abs(x) + Math.abs(y)) / 10"
     />
     <VectorPointElement />
   </Mafs>
@@ -369,15 +372,23 @@ onMounted(() => {
       :subdivisions="4"
       :xAxis="{ lines: Math.PI, labels: labelPi }"
     />
-    <FunctionGraphOfX :y="(x: number) => Math.sin(x - phaseX)" />
+    <PlotOfX :y="(x: number) => Math.sin(x - phaseX)" />
     <PhaseElement />
+  </Mafs>
+
+  <div class="divider"></div>
+
+  <Mafs>
+    <CartesianCoordinates />
+    <PlotOfX :y="Math.sin" :color="Theme.blue" />
+    <PlotOfY :x="sigmoid1" :color="Theme.pink" />
   </Mafs>
 
   <div class="divider"></div>
 
   <Mafs :viewBox="{ x: [-3, 3], y: [-3, 3] }">
     <CartesianCoordinates />
-    <FunctionGraphParametric
+    <PlotParametric
       :xy="
         (t) => [
           (t / 4) * Math.cos(t * 2 * Math.PI),
@@ -396,7 +407,7 @@ onMounted(() => {
       :subdivisions="4"
       :xAxis="{ lines: Math.PI, labels: labelPi }"
     />
-    <FunctionGraphOfX :y="(x: number) => Math.sin(x)" lineStyle="dashed" />
+    <PlotOfX :y="(x: number) => Math.sin(x)" lineStyle="dashed" />
   </Mafs>
 
   <div class="divider"></div>

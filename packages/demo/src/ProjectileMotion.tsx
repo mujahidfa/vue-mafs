@@ -4,7 +4,7 @@ import {
   useStopwatch,
   Point,
   useMovablePoint,
-  FunctionGraphParametric,
+  PlotParametric,
   Vector,
   Polygon,
 } from "vue-mafs";
@@ -73,7 +73,7 @@ const ProjectileMotion = defineComponent({
 
           {yVelocity.value > 0 && (
             <>
-              <FunctionGraphParametric
+              <PlotParametric
                 xy={positionAtTime}
                 t={[0, timeOfFlight.value]}
                 opacity={0.4}

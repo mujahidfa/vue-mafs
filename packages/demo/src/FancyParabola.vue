@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import {
   CartesianCoordinates,
-  FunctionGraphOfX,
+  PlotOfX,
   Mafs,
   Transform,
   useMovablePoint,
@@ -27,7 +27,7 @@ const fn = (x: number) => (x - a.x.value) * (x - b.x.value);
   <Mafs>
     <CartesianCoordinates :subdivisions="2" />
 
-    <FunctionGraphOfX :y="(x) => (k.y.value * fn(x)) / fn(mid)" />
+    <PlotOfX :y="(x) => (k.y.value * fn(x)) / fn(mid)" />
     <a.element.value />
     <b.element.value />
     <Transform :translate="[(a.x.value + b.x.value) / 2, 0]">

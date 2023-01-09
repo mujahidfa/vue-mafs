@@ -1,7 +1,7 @@
 import {
   Mafs,
   useMovablePoint,
-  FunctionGraphOfX,
+  PlotOfX,
   Polygon,
   Text,
   CartesianCoordinates,
@@ -66,7 +66,7 @@ const RiemannSum = defineComponent({
         <Mafs viewBox={{ x: [-1, 12], y: [-3, 10] }}>
           <CartesianCoordinates subdivisions={2} />
 
-          <FunctionGraphOfX y={wave} color="#358CF1" />
+          <PlotOfX y={wave} color="#358CF1" />
 
           {partitions.value.map((partition, index) => (
             <Polygon

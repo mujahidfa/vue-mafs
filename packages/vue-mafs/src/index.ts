@@ -11,10 +11,17 @@ export type {
 } from "./origin/CartesianCoordinates";
 
 export {
-  FunctionGraphOfX,
-  FunctionGraphParametric,
-} from "./display/FunctionGraph";
-export type { OfXProps, ParametricProps } from "./display/FunctionGraph";
+  PlotOfX,
+  PlotOfY,
+  PlotParametric,
+  PlotVectorField,
+} from "./display/Plot";
+export type {
+  OfXProps,
+  OfYProps,
+  ParametricProps,
+  VectorFieldProps,
+} from "./display/Plot";
 
 export {
   LinePointAngle,
@@ -43,9 +50,6 @@ export type { PointProps } from "./display/Point";
 
 export { Vector } from "./display/Vector";
 export type { VectorProps } from "./display/Vector";
-
-export { VectorField } from "./display/VectorField";
-export type { VectorFieldProps } from "./display/VectorField";
 
 export { Text } from "./display/Text";
 export type { TextProps, CardinalDirection } from "./display/Text";

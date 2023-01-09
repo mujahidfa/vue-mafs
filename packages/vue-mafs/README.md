@@ -17,13 +17,7 @@ Import the components directly:
 
 ```vue
 <script setup lang="ts">
-import {
-  Mafs,
-  CartesianCoordinates,
-  FunctionGraphOfX,
-  FunctionGraphParametric,
-  labelPi,
-} from "vue-mafs";
+import { Mafs, CartesianCoordinates, PlotOfX, labelPi } from "vue-mafs";
 </script>
 
 <template>
@@ -32,7 +26,7 @@ import {
       :subdivisions="4"
       :xAxis="{ lines: Math.PI, labels: labelPi }"
     />
-    <FunctionGraphOfX :y="(x: number) => Math.sin(x)" lineStyle="dashed" />
+    <PlotOfX :y="(x: number) => Math.sin(x)" lineStyle="dashed" />
   </Mafs>
 </template>
 
@@ -53,23 +47,25 @@ The docs for `vue-mafs` will come soon, but in the meantime, please refer to the
 
 ### Component renames (note the absence of the `.`):
 
-| `Mafs` name                    | `vue-mafs` name               |
-| ------------------------------ | ----------------------------- |
-| `<FunctionGraph.OfX />`        | `<FunctionGraphOfX />`        |
-| `<FunctionGraph.Parametric />` | `<FunctionGraphParametric />` |
-| `<Line.PointAngle />`          | `<LinePointAngle />`          |
-| `<Line.PointSlope />`          | `<LinePointSlope />`          |
-| `<Line.Segment />`             | `<LineSegment />`             |
-| `<Line.ThroughPoints />`       | `<LineThroughPoints />`       |
+| `Mafs` name              | `vue-mafs` name         |
+| ------------------------ | ----------------------- |
+| `<Plot.OfX />`           | `<PlotOfX />`           |
+| `<Plot.OfY />`           | `<PlotOfY />`           |
+| `<Plot.Parametric />`    | `<PlotParametric />`    |
+| `<Plot.VectorField />`   | `<PlotVectorField />`   |
+| `<Line.PointAngle />`    | `<LinePointAngle />`    |
+| `<Line.PointSlope />`    | `<LinePointSlope />`    |
+| `<Line.Segment />`       | `<LineSegment />`       |
+| `<Line.ThroughPoints />` | `<LineThroughPoints />` |
 
 ### Props differences:
 
 - `<Mafs />`
   - `ssr` prop is removed. It can be implemented if it's needed in Vue's SSR story (feel free to open an issue).
-- `<FunctionGraphOfX />`:
+- `<PlotOfX />` and `<PlotOfY />`:
   - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
   - `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
-- `<FunctionGraphParametric />`:
+- `<PlotParametric />`:
   - `style` prop is renamed to `lineStyle` so that it doesn't clash with the `style` attribute.
   - `svgPathProps` prop is removed and not needed because Vue supports inheritable attributes by default.
 - `<LinePointAngle />`, `<LinePointSlope />`, `<LineSegment />`, `<LineThroughPoints />`:
