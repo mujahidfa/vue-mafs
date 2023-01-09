@@ -6,7 +6,7 @@ import {
   Mafs,
   Transform,
   useMovablePoint,
-} from "../src/index";
+} from "vue-mafs";
 
 const a = useMovablePoint([-1, 0], {
   constrain: "horizontal",

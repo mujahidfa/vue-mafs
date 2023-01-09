@@ -22,7 +22,7 @@ import {
   Vector,
   VectorField,
   useStopwatch,
-} from "../src/index";
+} from "vue-mafs";
 import range from "lodash/range";
 import SnapPoint from "./SnapPoint.vue";
 import DynamicMovablePoints from "./DynamicMovablePoints";
@@ -413,7 +413,7 @@ onMounted(() => {
 </template>
 
 <style>
-@import "../src/index.css";
+@import "vue-mafs/index.css";
 .divider {
   margin: 30px;
 }

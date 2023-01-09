@@ -7,7 +7,7 @@ import {
   LineSegment,
   Theme,
   vec,
-} from "../src/index";
+} from "vue-mafs";
 import range from "lodash/range";
 import { computed, defineComponent } from "vue";
 

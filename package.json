@@ -1,73 +1,10 @@
 {
-  "name": "vue-mafs",
-  "version": "0.1.0",
-  "description": "Vue components for interactive math, based on Mafs.",
-  "license": "MIT",
-  "author": "Mujahid Anuar (https://github.com/mujahidfa)",
-  "homepage": "https://github.com/mujahidfa/vue-boring-avatars",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mujahidfa/vue-boring-avatars"
-  },
-  "bugs": {
-    "url": "https://github.com/mujahidfa/vue-boring-avatars/issues"
-  },
-  "type": "module",
-  "files": [
-    "dist"
+  "private": true,
+  "packageManager": "pnpm@7.22.0",
+  "workspaces": [
+    "packages/*"
   ],
-  "main": "./dist/vue-mafs.umd.cjs",
-  "module": "./dist/vue-mafs.js",
-  "types": "./dist/vue-mafs.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/vue-mafs.js",
-      "require": "./dist/vue-mafs.umd.cjs"
-    }
-  },
   "scripts": {
-    "dev": "vite",
-    "preview": "vite preview",
-    "test-unit": "vitest --environment jsdom --root src/",
-    "test-e2e": "playwright test",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,md,vue}\" --ignore-path .gitignore",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "beautify": "pnpm run format && pnpm run lint",
-    "check-type": "vue-tsc --noEmit -p tsconfig.vitest.json",
-    "gen-type": "vue-tsc --skipLibCheck --jsx preserve --declaration --emitDeclarationOnly --outFile dist/vue-mafs.d.ts --outDir dist/ src/index.ts",
-    "build-only": "vite build && pnpm run gen-type",
-    "build": "rm -rf dist/ && pnpm run beautify && pnpm run check-type && pnpm run build-only && cp src/index.css dist"
-  },
-  "dependencies": {
-    "@vueuse/core": "^9.10.0",
-    "computer-modern": "0.1.2-subsetting3",
-    "tiny-invariant": "^1.3.1",
-    "vuse-gesture": "^0.0.2"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.29.2",
-    "@rushstack/eslint-patch": "^1.2.0",
-    "@types/jest-image-snapshot": "^6.1.0",
-    "@types/jsdom": "^20.0.1",
-    "@types/lodash": "^4.14.191",
-    "@types/node": "^18.11.18",
-    "@vitejs/plugin-vue": "^4.0.0",
-    "@vitejs/plugin-vue-jsx": "^3.0.0",
-    "@vue/eslint-config-prettier": "^7.0.0",
-    "@vue/eslint-config-typescript": "^11.0.2",
-    "@vue/test-utils": "^2.2.7",
-    "@vue/tsconfig": "^0.1.3",
-    "eslint": "^8.31.0",
-    "eslint-plugin-vue": "^9.8.0",
-    "jest-image-snapshot": "^6.1.0",
-    "js-easing-functions": "^1.0.3",
-    "jsdom": "^21.0.0",
-    "lodash": "^4.17.21",
-    "prettier": "^2.8.2",
-    "typescript": "~4.7.4",
-    "vite": "^4.0.4",
-    "vitest": "^0.26.3",
-    "vue": "^3.2.45",
-    "vue-tsc": "^1.0.22"
+    "build": "pnpm run -r --filter=!docs build"
   }
 }

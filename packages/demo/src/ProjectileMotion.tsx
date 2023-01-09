@@ -7,7 +7,7 @@ import {
   FunctionGraphParametric,
   Vector,
   Polygon,
-} from "../src/index";
+} from "vue-mafs";
 
 const ProjectileMotion = defineComponent({
   setup() {

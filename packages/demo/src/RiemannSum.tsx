@@ -5,7 +5,7 @@ import {
   Polygon,
   Text,
   CartesianCoordinates,
-} from "../src/index";
+} from "vue-mafs";
 
 import sumBy from "lodash/sumBy";
 import range from "lodash/range";

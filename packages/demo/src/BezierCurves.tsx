@@ -9,7 +9,7 @@ import {
   useStopwatch,
   type Vector2,
   vec,
-} from "../src/index";
+} from "vue-mafs";
 import { easeInOutCubic } from "js-easing-functions";
 import { computed, defineComponent, ref, watchEffect } from "vue";
 

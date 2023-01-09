@@ -41,7 +41,7 @@ import {
 </style>
 ```
 
-For how to's and examples, you can refer to the [demo](./packages/demo/src/App.vue).
+For how to's and examples, you can refer to the [demo](../packages/demo/src/App.vue).
 
 The docs for `vue-mafs` will come soon, but in the meantime, please refer to the [Mafs](https://mafs.dev/) documentation for further reference of features, components and composables. This should be your first source of reference for now.
 

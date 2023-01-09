@@ -9,6 +9,7 @@ export default defineConfig({
   build: {
     lib: {
       name: "vue-mafs",
+      fileName: "index",
       entry: resolve(__dirname, "src/index.ts"),
     },
     rollupOptions: {
@@ -20,6 +21,10 @@ export default defineConfig({
         // for externalized deps
         globals: {
           vue: "Vue",
+        },
+        assetFileNames: (chunkInfo) => {
+          if (chunkInfo.name === "style.css") return "index.css";
+          return chunkInfo.name as string;
         },
       },
     },

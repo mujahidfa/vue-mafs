@@ -1,5 +1,5 @@
 import { defineComponent, type PropType } from "vue";
-import { Filled, Theme } from "./Theme";
+import { type Filled, Theme } from "./Theme";
 import { Ellipse } from "./Ellipse";
 import type { Vector2 } from "../vec";
 

@@ -9,7 +9,7 @@ import {
   Polygon,
   vec,
   Theme,
-} from "../src/index";
+} from "vue-mafs";
 import clamp from "lodash/clamp";
 import { defineComponent } from "vue";
 
