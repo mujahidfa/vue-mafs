@@ -1,6 +1,6 @@
 {
   "name": "vue-mafs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Vue components for creating interactive math visualizations, based on Mafs.",
   "type": "module",
   "main": "./dist/index.umd.cjs",
