@@ -413,7 +413,9 @@ onMounted(() => {
 </template>
 
 <style>
-@import "vue-mafs/index.css";
+@import "vue-mafs/core.css";
+/* Optional, adds the Computer Modern font which weighs about 220kB */
+@import "vue-mafs/font.css";
 .divider {
   margin: 30px;
 }
