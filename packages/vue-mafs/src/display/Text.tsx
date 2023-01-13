@@ -110,7 +110,6 @@ export const Text = defineComponent({
         dominant-baseline={derived.value.dominantBaseline}
         text-anchor={derived.value.textAnchor}
         style={{
-          // stroke: props.color || "var(--mafs-bg)",
           fill: props.color || "var(--mafs-fg)",
           vectorEffect: "non-scaling-stroke",
         }}
