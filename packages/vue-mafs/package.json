@@ -32,6 +32,7 @@
   },
   "keywords": [],
   "scripts": {
+    "dev": "vite",
     "build": "run-p format lint && run-p type-check build-only type-gen && cp src/index.css dist/core.css && cp src/font.css dist/font.css",
     "build-only": "rimraf dist && vite build",
     "type-check": "vue-tsc --noEmit",
@@ -53,10 +54,10 @@
     "eslint-plugin-vue": "^9.8.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.2",
-    "rimraf": "^3.0.2",
+    "rimraf": "^4.0.4",
     "typescript": "^4.9.4",
     "vite": "^4.0.4",
-    "vitest": "^0.27.0",
+    "vitest": "^0.27.1",
     "vue": "^3.2.45",
     "vue-tsc": "^1.0.22"
   },
