@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-  <Mafs>
+  <Mafs :height="230">
     <CartesianCoordinates :subdivisions="subdivisions" />
   </Mafs>
 </template>
