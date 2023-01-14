@@ -8,7 +8,3 @@ import { Mafs, CartesianCoordinates, PlotOfX } from "vue-mafs";
     <PlotOfX :y="(x) => Math.sin(x)" />
   </Mafs>
 </template>
-
-<style>
-@import "vue-mafs/core.css";
-</style>

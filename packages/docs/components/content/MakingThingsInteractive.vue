@@ -22,7 +22,3 @@ const phase = useMovablePoint([0, 0], {
     <phase.element.value />
   </Mafs>
 </template>
-
-<style>
-@import "vue-mafs/core.css";
-</style>
