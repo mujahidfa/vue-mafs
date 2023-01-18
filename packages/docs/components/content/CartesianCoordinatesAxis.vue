@@ -29,3 +29,7 @@ function isOdd(n: number) {
     />
   </Mafs>
 </template>
+
+<style>
+@import "vue-mafs/core.css";
+</style>

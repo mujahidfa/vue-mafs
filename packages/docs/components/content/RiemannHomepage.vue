@@ -118,6 +118,8 @@ const partitions = computed<Partition[]>(() => {
 </template>
 
 <style>
+@import "vue-mafs/core.css";
+
 .homepage-mafs .MafsView {
   --mafs-bg: transparent;
   --mafs-fg: black;

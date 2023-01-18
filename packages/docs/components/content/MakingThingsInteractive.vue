@@ -13,7 +13,11 @@ const phase = useMovablePoint([0, 0], {
 </script>
 
 <template>
-  <Mafs :height="565" :viewBox="{ x: [-10, 10], y: [-2, 2] }" :preserveAspectRatio="false">
+  <Mafs
+    :height="565"
+    :viewBox="{ x: [-10, 10], y: [-2, 2] }"
+    :preserveAspectRatio="false"
+  >
     <CartesianCoordinates
       :subdivisions="4"
       :xAxis="{ lines: Math.PI, labels: labelPi }"
@@ -22,3 +26,7 @@ const phase = useMovablePoint([0, 0], {
     <phase.element.value />
   </Mafs>
 </template>
+
+<style>
+@import "vue-mafs/core.css";
+</style>

@@ -7,3 +7,7 @@ import { Mafs, Text } from "vue-mafs";
     <Text :x="0" :y="0">I love math!</Text>
   </Mafs>
 </template>
+
+<style>
+@import "vue-mafs/core.css";
+</style>

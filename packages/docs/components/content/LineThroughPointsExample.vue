@@ -21,3 +21,7 @@ const point2 = useMovablePoint([2, 1]);
     <point2.element.value />
   </Mafs>
 </template>
+
+<style>
+@import "vue-mafs/core.css";
+</style>

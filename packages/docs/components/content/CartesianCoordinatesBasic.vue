@@ -7,3 +7,7 @@ import { Mafs, CartesianCoordinates } from "vue-mafs";
     <CartesianCoordinates />
   </Mafs>
 </template>
+
+<style>
+@import "vue-mafs/core.css";
+</style>

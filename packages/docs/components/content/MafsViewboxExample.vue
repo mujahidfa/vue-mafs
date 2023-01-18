@@ -15,3 +15,7 @@ import { Mafs, CartesianCoordinates, Polygon } from "vue-mafs";
     />
   </Mafs>
 </template>
+
+<style>
+@import "vue-mafs/core.css";
+</style>

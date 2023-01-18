@@ -15,3 +15,7 @@ defineProps({
     <CartesianCoordinates :subdivisions="subdivisions" />
   </Mafs>
 </template>
+
+<style>
+@import "vue-mafs/core.css";
+</style>

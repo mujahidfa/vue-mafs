@@ -20,3 +20,7 @@ const slope = useMovablePoint([0, 1], {
     <slope.element.value />
   </Mafs>
 </template>
+
+<style>
+@import "vue-mafs/core.css";
+</style>
