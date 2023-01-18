@@ -9,7 +9,7 @@
     "preview": "nuxi preview"
   },
   "devDependencies": {
-    "@nuxt-themes/docus": "^1.1.5",
+    "@nuxt-themes/docus": "^1.4.6",
     "js-easing-functions": "^1.0.3",
     "lodash": "^4.17.21",
     "nuxt": "^3.0.0",
