@@ -13,6 +13,8 @@
     "js-easing-functions": "^1.0.3",
     "lodash": "^4.17.21",
     "nuxt": "^3.0.0",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
     "vue-mafs": "workspace:*"
   }
 }

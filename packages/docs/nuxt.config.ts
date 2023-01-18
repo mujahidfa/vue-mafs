@@ -1,8 +1,6 @@
 export default defineNuxtConfig({
   extends: "@nuxt-themes/docus",
-  css: [
-    'vue-mafs/core.css'
-  ],
+  css: ["~/assets/main.css"],
   app: {
     head: {
       htmlAttrs: {
