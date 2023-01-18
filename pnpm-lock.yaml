@@ -54,7 +54,7 @@ importers:
       js-easing-functions: ^1.0.3
       lodash: ^4.17.21
       nuxt: ^3.0.0
-      vue-mafs: workspace:*
+      vue-mafs: workspace:^0.2.1
     devDependencies:
       '@nuxt-themes/docus': 1.4.6_nuxt@3.0.0
       js-easing-functions: 1.0.3
