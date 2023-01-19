@@ -1,9 +1,8 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { type Stroked, Theme } from "../../display/Theme";
-import { useScaleContext } from "../../view/ScaleContext";
+import { useTransformContext } from "../../context/TransformContext";
 import { round } from "../../math";
 import * as vec from "../../vec";
-import { useTransformContext } from "../Transform";
 
 export interface ThroughPointsProps extends Stroked {
   point1: vec.Vector2;
@@ -46,10 +45,9 @@ export const ThroughPoints = defineComponent({
     },
   },
   setup(props) {
-    const { pixelMatrix } = useScaleContext();
-    const transformContext = useTransformContext();
+    const { viewTransform, userTransform } = useTransformContext();
     const transform = computed(() =>
-      vec.matrixMult(pixelMatrix.value, transformContext.value)
+      vec.matrixMult(viewTransform.value, userTransform.value)
     );
     const segment = computed(() =>
       vec.scale(vec.normalize(vec.sub(props.point2, props.point1)), 100000)

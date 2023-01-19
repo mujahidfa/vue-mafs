@@ -1,14 +1,9 @@
-import {
-  computed,
-  defineComponent,
-  inject,
-  provide,
-  ref,
-  type InjectionKey,
-  type PropType,
-  type Ref,
-} from "vue";
+import { computed, defineComponent, provide, type PropType } from "vue";
 import * as vec from "../vec";
+import {
+  transformInjectionKey,
+  useTransformContext,
+} from "../context/TransformContext";
 
 export interface TransformProps {
   matrix?: vec.Matrix;
@@ -16,13 +11,6 @@ export interface TransformProps {
   scale?: number | vec.Vector2;
   rotate?: number;
   shear?: vec.Vector2;
-}
-
-export const transformInjectionKey = Symbol() as InjectionKey<Ref<vec.Matrix>>;
-
-export function useTransformContext() {
-  const transform = ref(vec.matrixBuilder().get());
-  return inject(transformInjectionKey, transform);
 }
 
 export const Transform = defineComponent({
@@ -51,9 +39,9 @@ export const Transform = defineComponent({
     },
   },
   setup(props, { slots }) {
-    const existingTransform = useTransformContext();
+    const { userTransform, viewTransform } = useTransformContext();
 
-    const newTransform = computed(() => {
+    const newUserTransform = computed(() => {
       let builder = vec.matrixBuilder();
 
       if (props.matrix) builder = builder.mult(props.matrix);
@@ -83,13 +71,24 @@ export const Transform = defineComponent({
         }
       }
 
-      builder = builder.mult(existingTransform.value);
+      builder = builder.mult(userTransform.value);
 
       return builder.get();
     });
 
-    provide(transformInjectionKey, newTransform);
+    provide(transformInjectionKey, {
+      userTransform: newUserTransform,
+      viewTransform,
+    });
 
-    return () => slots.default?.();
+    return () => (
+      <g
+        style={{
+          "--mafs-user-transform": vec.toCSS(newUserTransform.value),
+        }}
+      >
+        {slots.default?.()}
+      </g>
+    );
   },
 });

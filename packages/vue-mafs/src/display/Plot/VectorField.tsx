@@ -1,9 +1,9 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { clamp } from "../../math";
 import * as vec from "../../vec";
-import { usePaneContext } from "../../view/PaneManager";
-import { useScaleContext } from "../../view/ScaleContext";
+import { usePaneContext } from "../../context/PaneContext";
 import { Theme } from "../Theme";
+import { useTransformContext } from "../../context/TransformContext";
 
 export interface VectorFieldProps {
   xy: (point: vec.Vector2) => vec.Vector2;
@@ -43,7 +43,7 @@ export const VectorField = defineComponent({
     },
   },
   setup(props) {
-    const { pixelMatrix } = useScaleContext();
+    const { viewTransform: pixelMatrix } = useTransformContext();
     const { xPanes, yPanes } = usePaneContext();
 
     const layers = computed(() => {

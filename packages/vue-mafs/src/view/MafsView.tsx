@@ -2,15 +2,16 @@ import { computed, defineComponent, provide, ref, type PropType } from "vue";
 import {
   coordinateInjectionKey,
   type CoordinateContextShape,
-} from "./CoordinateContext";
-import { PaneManager } from "./PaneManager";
-import { mapInjectionKey, type MapContextShape } from "./MapContext";
+} from "../context/CoordinateContext";
+import { PaneManager } from "../context/PaneContext";
 import { useElementSize } from "@vueuse/core";
 
 import { normalizeProps, useDrag } from "vuse-gesture";
-import { scaleInjectionKey, type ScaleContextShape } from "./ScaleContext";
 import { round } from "../math";
 import * as vec from "../vec";
+import * as math from "../math";
+import { transformInjectionKey } from "../context/TransformContext";
+import { spanInjectionKey } from "../context/SpanContext";
 
 export interface MafsViewProps {
   width?: number | "auto";
@@ -152,38 +153,14 @@ export const MafsView = defineComponent({
       { enabled: props.pan }
     );
 
-    const mapX = computed(
-      () => (x: number) =>
-        round(((x - xMin.value) / (xMax.value - xMin.value)) * width.value)
-    );
-    const mapY = computed(
-      () => (y: number) =>
-        round(((y - yMax.value) / (yMin.value - yMax.value)) * props.height)
-    );
+    const viewTransform = computed(() => {
+      const scaleX = round((1 / xSpan.value) * width.value, 5);
+      const scaleY = round((-1 / ySpan.value) * props.height, 5);
+      return vec.matrixBuilder().scale(scaleX, scaleY).get();
+    });
 
-    const scaleX = computed(
-      () => (x: number) => round((x / xSpan.value) * width.value, 5)
-    );
-    const scaleY = computed(
-      () => (y: number) => round((-y / ySpan.value) * props.height, 5)
-    );
-
-    const unscaleX = computed(
-      () => (x: number) => round((x / width.value) * xSpan.value, 5)
-    );
-    const unscaleY = computed(
-      () => (y: number) => round((-y / props.height) * ySpan.value, 5)
-    );
-
-    const pixelMatrix = computed(() =>
-      vec.matrixBuilder().scale(scaleX.value(1), scaleY.value(1)).get()
-    );
-    const inversePixelMatrix = computed(() =>
-      vec.matrixBuilder().scale(unscaleX.value(1), unscaleY.value(1)).get()
-    );
-
-    const cssScale = computed(
-      () => `scale(${scaleX.value(1)} ${scaleY.value(1)})`
+    const toPxCSS = computed(() =>
+      math.matrixToCSSTransform(viewTransform.value)
     );
 
     const coordinateContext: CoordinateContextShape = {
@@ -194,20 +171,20 @@ export const MafsView = defineComponent({
       height: props.height,
       width: width.value,
     };
-    const scaleContext: ScaleContextShape = {
-      scaleX,
-      scaleY,
-      pixelMatrix,
-      inversePixelMatrix,
-      cssScale,
-      xSpan,
-      ySpan,
-    };
-    const mapContext: MapContextShape = { mapX, mapY };
+
+    const viewBoxX = computed(() =>
+      round((xMin.value / (xMax.value - xMin.value)) * width.value, 2)
+    );
+    const viewBoxY = computed(() =>
+      round((yMax.value / (yMin.value - yMax.value)) * props.height, 2)
+    );
 
     provide(coordinateInjectionKey, coordinateContext);
-    provide(scaleInjectionKey, scaleContext);
-    provide(mapInjectionKey, mapContext);
+    provide(spanInjectionKey, { xSpan, ySpan });
+    provide(transformInjectionKey, {
+      userTransform: ref(vec.identity),
+      viewTransform: viewTransform,
+    });
 
     return () => (
       <div
@@ -221,13 +198,13 @@ export const MafsView = defineComponent({
           <svg
             width={width.value}
             height={props.height}
-            viewBox={`${-mapX.value(0)} ${-mapY.value(0)} ${width.value} ${
-              props.height
-            }`}
+            viewBox={`${viewBoxX.value} ${viewBoxY.value} ${width.value} ${props.height}`}
             preserveAspectRatio="xMidYMin"
             style={{
               width: desiredCssWidth.value,
               touchAction: props.pan ? "none" : "auto",
+              "--mafs-view-transform": toPxCSS.value,
+              "--mafs-user-transform": "translate(0, 0)",
             }}
           >
             {visible.value && slots.default?.()}

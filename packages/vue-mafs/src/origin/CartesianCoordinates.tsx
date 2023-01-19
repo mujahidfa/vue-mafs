@@ -1,8 +1,9 @@
 import { computed, defineComponent, type PropType } from "vue";
-import { GridPattern } from "./GridPattern";
 import { range, round } from "../math";
-import { usePaneContext } from "../view/PaneManager";
-import { useScaleContext } from "../view/ScaleContext";
+import { usePaneContext } from "../context/PaneContext";
+import { useTransformContext } from "../context/TransformContext";
+import * as vec from "../vec";
+import { GridPattern } from "./GridPattern";
 
 export type LabelMaker = (value: number) => number | string;
 
@@ -68,15 +69,27 @@ export const CartesianCoordinates = defineComponent({
     const id = `mafs-grid-${incrementer++}`;
 
     const { xPaneRange, yPaneRange } = usePaneContext();
-    const { scaleX, scaleY } = useScaleContext();
 
-    const xCoor = computed(() => xPaneRange.value.map(scaleX.value));
-    const yCoor = computed(() => yPaneRange.value.map(scaleY.value));
+    const minX = computed(() => xPaneRange.value[0]);
+    const maxX = computed(() => xPaneRange.value[1]);
+    const minY = computed(() => yPaneRange.value[0]);
+    const maxY = computed(() => yPaneRange.value[1]);
 
-    const minX = computed(() => xCoor.value[0]);
-    const maxX = computed(() => xCoor.value[1]);
-    const minY = computed(() => yCoor.value[0]);
-    const maxY = computed(() => yCoor.value[1]);
+    const { viewTransform } = useTransformContext();
+    const minPx = computed(() =>
+      vec.transform([minX.value, maxY.value], viewTransform.value)
+    );
+    const minXPx = computed(() => minPx.value[0]);
+    const minYPx = computed(() => minPx.value[1]);
+
+    const px = computed(() =>
+      vec.transform(
+        [maxX.value - minX.value, maxY.value - minY.value],
+        viewTransform.value
+      )
+    );
+    const widthPx = computed(() => px.value[0]);
+    const heightPx = computed(() => px.value[1]);
 
     return () => (
       <>
@@ -93,47 +106,51 @@ export const CartesianCoordinates = defineComponent({
             }
           />
         </defs>
-
         <rect
           fill={`url(#${id})`}
-          x={minX.value}
-          y={maxY.value}
-          width={maxX.value - minX.value}
-          height={-(maxY.value - minY.value)}
+          x={minXPx.value}
+          y={minYPx.value}
+          width={widthPx.value}
+          height={-heightPx.value}
         />
+        <g style={{ transform: "var(--mafs-view-transform)" }}>
+          {props.xAxis !== false && xAxis.value.axis && (
+            <line
+              x1={minX.value}
+              x2={maxX.value}
+              y1={0}
+              y2={0}
+              style={{ stroke: "var(--mafs-origin-color)" }}
+              vector-effect="non-scaling-stroke"
+            />
+          )}
 
-        {props.xAxis !== false && xAxis.value.labels && (
-          <XLabels
-            labelMaker={xAxis.value.labels}
-            separation={xAxis.value.lines || 1}
-          />
-        )}
-        {props.yAxis !== false && yAxis.value.labels && (
-          <YLabels
-            labelMaker={yAxis.value.labels}
-            separation={yAxis.value.lines || 1}
-          />
-        )}
+          {props.yAxis !== false && yAxis.value.axis && (
+            <line
+              x1={0}
+              x2={0}
+              y1={minY.value}
+              y2={maxY.value}
+              style={{ stroke: "var(--mafs-origin-color)" }}
+              vector-effect="non-scaling-stroke"
+            />
+          )}
+        </g>
 
-        {props.xAxis !== false && xAxis.value.axis && (
-          <line
-            x1={-10000000}
-            x2={10000000}
-            y1={0}
-            y2={0}
-            style={{ stroke: "var(--mafs-origin-color)" }}
-          />
-        )}
-
-        {props.yAxis !== false && yAxis.value.axis && (
-          <line
-            x1={0}
-            x2={0}
-            y1={-10000000}
-            y2={10000000}
-            style={{ stroke: "var(--mafs-origin-color)" }}
-          />
-        )}
+        <g class="mafs-shadow" fill="var(--mafs-fg)">
+          {props.xAxis !== false && xAxis.value.labels && (
+            <XLabels
+              labelMaker={xAxis.value.labels}
+              separation={xAxis.value.lines || 1}
+            />
+          )}
+          {props.yAxis !== false && yAxis.value.labels && (
+            <YLabels
+              labelMaker={yAxis.value.labels}
+              separation={yAxis.value.lines || 1}
+            />
+          )}
+        </g>
       </>
     );
   },
@@ -151,31 +168,29 @@ const XLabels = defineComponent({
     labelMaker: { type: Function as PropType<LabelMaker>, required: true },
   },
   setup(props) {
-    const { scaleX } = useScaleContext();
+    const { viewTransform } = useTransformContext();
     const { xPanes } = usePaneContext();
     const xs = computed(() =>
       snappedRange(
         xPanes.value[0][0] - props.separation,
         xPanes.value[xPanes.value.length - 1][1] + props.separation,
         props.separation
-      )
+      ).filter((x) => x !== 0)
     );
 
     return () => (
-      <g class="mafs-shadow">
-        {xs.value
-          .filter((x) => Math.abs(scaleX.value(x) - scaleX.value(0)) > 1)
-          .map((x) => (
-            <text
-              key={x}
-              x={scaleX.value(x)}
-              y={5}
-              dominant-baseline="hanging"
-              text-anchor="middle"
-            >
-              {props.labelMaker(x)}
-            </text>
-          ))}
+      <g>
+        {xs.value.map((x) => (
+          <text
+            key={x}
+            x={vec.transform([x, 0], viewTransform.value)[0]}
+            y={5}
+            dominant-baseline="hanging"
+            text-anchor="middle"
+          >
+            {props.labelMaker(x)}
+          </text>
+        ))}
       </g>
     );
   },
@@ -188,25 +203,28 @@ const YLabels = defineComponent({
     labelMaker: { type: Function as PropType<LabelMaker>, required: true },
   },
   setup(props) {
-    const { scaleY } = useScaleContext();
+    const { viewTransform: toPx } = useTransformContext();
     const { yPanes } = usePaneContext();
     const ys = computed(() =>
       snappedRange(
         yPanes.value[0][0] - props.separation,
         yPanes.value[yPanes.value.length - 1][1] + props.separation,
         props.separation
-      )
+      ).filter((y) => y !== 0)
     );
 
     return () => (
-      <g class="mafs-shadow">
-        {ys.value
-          .filter((y) => Math.abs(scaleY.value(y) - scaleY.value(0)) > 1)
-          .map((y) => (
-            <text key={y} x={5} y={scaleY.value(y)} dominant-baseline="central">
-              {props.labelMaker(y)}
-            </text>
-          ))}
+      <g>
+        {ys.value.map((y) => (
+          <text
+            key={y}
+            x={5}
+            y={vec.transform([0, y], toPx.value)[1]}
+            dominant-baseline="central"
+          >
+            {props.labelMaker(y)}
+          </text>
+        ))}
       </g>
     );
   },

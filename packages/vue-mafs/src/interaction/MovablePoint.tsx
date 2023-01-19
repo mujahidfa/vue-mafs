@@ -1,11 +1,18 @@
-import { computed, defineComponent, ref, type PropType } from "vue";
+import {
+  computed,
+  defineComponent,
+  ref,
+  watch,
+  watchEffect,
+  type PropType,
+} from "vue";
 import { normalizeProps, useDrag } from "vuse-gesture";
 import invariant from "tiny-invariant";
-import { useTransformContext } from "../display/Transform";
 import { Theme } from "../display/Theme";
 import { range } from "../math";
 import * as vec from "../vec";
-import { useScaleContext } from "../view/ScaleContext";
+import { useTransformContext } from "../context/TransformContext";
+import { useSpanContext } from "../context/SpanContext";
 
 export type ConstraintFunction = (position: vec.Vector2) => vec.Vector2;
 
@@ -54,15 +61,18 @@ export const MovablePoint = defineComponent({
     },
   },
   setup(props) {
-    const { xSpan, ySpan, pixelMatrix, inversePixelMatrix } = useScaleContext();
+    const { viewTransform, userTransform } = useTransformContext();
+    const { xSpan, ySpan } = useSpanContext();
+    const inverseViewTransform = computed(() =>
+      vec.matrixInvert(viewTransform.value)
+    );
 
-    const transform = useTransformContext();
     const inverseTransform = computed(() =>
-      getInverseTransform(transform.value)
+      getInverseTransform(userTransform.value)
     );
 
     const combinedTransform = computed(() =>
-      vec.matrixMult(pixelMatrix.value, transform.value)
+      vec.matrixMult(viewTransform.value, userTransform.value)
     );
 
     const dragging = ref(false);
@@ -102,7 +112,7 @@ export const MovablePoint = defineComponent({
           const testPoint = props.constrain(
             vec.transform(
               vec.add(
-                vec.transform(props.point, transform.value),
+                vec.transform(props.point, userTransform.value),
                 testMovement
               ),
               inverseTransform.value
@@ -119,10 +129,19 @@ export const MovablePoint = defineComponent({
 
         dragging.value = !last;
 
-        if (first) pickup.value = vec.transform(props.point, transform.value);
+        if (first)
+          pickup.value = vec.transform(props.point, userTransform.value);
         if (vec.mag(pixelMovement) === 0) return;
 
-        const movement = vec.transform(pixelMovement, inversePixelMatrix.value);
+        invariant(
+          inverseViewTransform.value,
+          "The view transform must be invertible."
+        );
+
+        const movement = vec.transform(
+          pixelMovement,
+          inverseViewTransform.value
+        );
         props.onMove(
           props.constrain(
             vec.transform(

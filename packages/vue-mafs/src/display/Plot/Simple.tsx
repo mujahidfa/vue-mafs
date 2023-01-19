@@ -1,5 +1,5 @@
 import { computed, defineComponent, type PropType } from "vue";
-import { usePaneContext } from "../../view/PaneManager";
+import { usePaneContext } from "../../context/PaneContext";
 import { Parametric, type ParametricProps } from "./Parametric";
 import type * as vec from "../../vec";
 

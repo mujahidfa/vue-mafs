@@ -1,9 +1,8 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { type Stroked, Theme } from "../../display/Theme";
-import { useScaleContext } from "../../view/ScaleContext";
+import { useTransformContext } from "../../context/TransformContext";
 import { round } from "../../math";
 import * as vec from "../../vec";
-import { useTransformContext } from "../Transform";
 
 export interface SegmentProps extends Stroked {
   point1: vec.Vector2;
@@ -46,10 +45,9 @@ export const Segment = defineComponent({
     },
   },
   setup(props) {
-    const { pixelMatrix } = useScaleContext();
-    const transformContext = useTransformContext();
+    const { viewTransform: pixelMatrix, userTransform } = useTransformContext();
     const transform = computed(() =>
-      vec.matrixMult(pixelMatrix.value, transformContext.value)
+      vec.matrixMult(pixelMatrix.value, userTransform.value)
     );
 
     const scaledPoint1 = computed(() =>

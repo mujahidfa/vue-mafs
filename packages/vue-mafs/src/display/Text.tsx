@@ -1,7 +1,6 @@
 import { computed, defineComponent, type PropType } from "vue";
-import { useScaleContext } from "../view/ScaleContext";
 import * as vec from "../vec";
-import { useTransformContext } from "./Transform";
+import { useTransformContext } from "../context/TransformContext";
 
 export type CardinalDirection =
   | "n"
@@ -52,8 +51,8 @@ export const Text = defineComponent({
     },
   },
   setup(props, { slots }) {
-    const { pixelMatrix } = useScaleContext();
-    const transformContext = useTransformContext();
+    const { viewTransform: pixelMatrix, userTransform: transformContext } =
+      useTransformContext();
 
     const derived = computed(() => {
       let xOffset = 0;

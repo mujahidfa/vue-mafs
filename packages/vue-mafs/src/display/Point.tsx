@@ -1,7 +1,5 @@
 import { computed, defineComponent } from "vue";
-
-import { useScaleContext } from "../view/ScaleContext";
-import { useTransformContext } from "./Transform";
+import { useTransformContext } from "../context/TransformContext";
 import { Theme } from "./Theme";
 import * as vec from "../vec";
 
@@ -20,8 +18,8 @@ export const Point = defineComponent({
     opacity: { type: Number, default: 1, required: false },
   },
   setup(props) {
-    const { pixelMatrix } = useScaleContext();
-    const transform = useTransformContext();
+    const { viewTransform: pixelMatrix, userTransform: transform } =
+      useTransformContext();
 
     const coor = computed(() =>
       vec.transform(

@@ -1,9 +1,8 @@
 import { computed, defineComponent, type PropType } from "vue";
-import { useScaleContext } from "../view/ScaleContext";
 import type { Stroked } from "../display/Theme";
 import { Theme } from "./Theme";
 import * as vec from "../vec";
-import { useTransformContext } from "./Transform";
+import { useTransformContext } from "../context/TransformContext";
 
 // This is sort of a hack—every SVG pattern on a page needs a unique ID, otherwise they conflict.
 let incrementer = 0;
@@ -47,16 +46,14 @@ export const Vector = defineComponent({
     },
   },
   setup(props) {
-    const { pixelMatrix } = useScaleContext();
-    const transformCtx = useTransformContext();
-    const transform = computed(() =>
-      vec.matrixMult(pixelMatrix.value, transformCtx.value)
-    );
+    const { userTransform } = useTransformContext();
 
     const pixelTail = computed(() =>
-      vec.transform(props.tail, transform.value)
+      vec.transform(props.tail, userTransform.value)
     );
-    const pixelTip = computed(() => vec.transform(props.tip, transform.value));
+    const pixelTip = computed(() =>
+      vec.transform(props.tip, userTransform.value)
+    );
 
     const id = `mafs-triangle-${incrementer++}`;
 
@@ -89,6 +86,8 @@ export const Vector = defineComponent({
           style={{
             stroke: props.color || "var(--mafs-fg)",
             strokeOpacity: props.opacity,
+            transform: "var(--mafs-view-transform)",
+            vectorEffect: "non-scaling-stroke",
           }}
         />
       </>

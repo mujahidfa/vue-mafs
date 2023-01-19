@@ -1,8 +1,7 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { Theme, type Filled } from "./Theme";
-import { useScaleContext } from "../view/ScaleContext";
+import { useTransformContext } from "../context/TransformContext";
 import type { Vector2 } from "../vec";
-import { useTransformContext } from "./Transform";
 import * as vec from "../vec";
 
 export interface PolygonProps extends Filled {
@@ -45,12 +44,11 @@ export const Polygon = defineComponent({
     },
   },
   setup(props) {
-    const { cssScale } = useScaleContext();
-    const transform = useTransformContext();
+    const { userTransform } = useTransformContext();
 
     const scaledPoints = computed(() =>
       props.points
-        .map((point) => vec.transform(point, transform.value).join(" "))
+        .map((point) => vec.transform(point, userTransform.value).join(" "))
         .join(" ")
     );
 
@@ -61,13 +59,13 @@ export const Polygon = defineComponent({
         fill-opacity={props.fillOpacity}
         stroke-dasharray={props.strokeStyle === "dashed" ? "4,3" : undefined}
         stroke-linejoin="round"
-        transform={cssScale.value}
         style={{
           fill: props.color,
           fillOpacity: props.fillOpacity,
           stroke: props.color,
           strokeOpacity: props.strokeOpacity,
           vectorEffect: "non-scaling-stroke",
+          transform: "var(--mafs-view-transform)",
         }}
       ></polygon>
     );

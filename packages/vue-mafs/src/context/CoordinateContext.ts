@@ -17,7 +17,7 @@ export function useCoordinateContext(): CoordinateContextShape {
   const coordinateInjection = inject(coordinateInjectionKey);
   invariant(
     coordinateInjection,
-    "coordinateInjection is not loaded. Are you rendering a Mafs component outside of a MafsView?"
+    "coordinateInjection is not loaded. Are you rendering a Mafs component outside of <Mafs />?"
   );
 
   return coordinateInjection;
