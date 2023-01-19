@@ -1,24 +1,22 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { type Filled, Theme } from "./Theme";
 import { useTransformContext } from "../context/TransformContext";
-import type { Vector2 } from "../vec";
-import * as vec from "../vec";
-import * as math from "../math";
+import { vec } from "../vec";
 
 export interface EllipseProps extends Filled {
-  center: Vector2;
-  radius: Vector2;
+  center: vec.Vector2;
+  radius: vec.Vector2;
   angle?: number;
 }
 
 export const Ellipse = defineComponent({
   props: {
     center: {
-      type: Object as PropType<Vector2>,
+      type: Object as PropType<vec.Vector2>,
       required: true,
     },
     radius: {
-      type: Object as PropType<Vector2>,
+      type: Object as PropType<vec.Vector2>,
       required: true,
     },
     angle: {
@@ -71,7 +69,7 @@ export const Ellipse = defineComponent({
 
     const cssTransform = computed(
       () => `
-        ${math.matrixToCSSTransform(transform.value)}
+        ${vec.toCSS(transform.value)}
         rotate(${props.angle * (180 / Math.PI)})
     `
     );

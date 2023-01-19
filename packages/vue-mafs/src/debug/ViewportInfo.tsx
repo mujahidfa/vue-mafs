@@ -2,7 +2,7 @@ import { computed, defineComponent } from "vue";
 import { useCoordinateContext } from "../context/CoordinateContext";
 import { usePaneContext } from "../context/PaneContext";
 import { useTransformContext } from "../context/TransformContext";
-import { vec } from "../vec";
+import { vec } from "..";
 
 export interface PaneVisualizerProps {
   /** The number of decimal places to which to round the displayed values. */

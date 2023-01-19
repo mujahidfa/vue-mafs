@@ -1,5 +1,5 @@
 import { computed, defineComponent, provide, type PropType } from "vue";
-import * as vec from "../vec";
+import { vec } from "../vec";
 import {
   transformInjectionKey,
   useTransformContext,

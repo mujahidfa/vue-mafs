@@ -1,7 +1,7 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { usePaneContext } from "../../context/PaneContext";
 import { Parametric, type ParametricProps } from "./Parametric";
-import type * as vec from "../../vec";
+import type { vec } from "../../vec";
 
 export interface OfXProps extends Omit<ParametricProps, "xy" | "t"> {
   y: (x: number) => number;

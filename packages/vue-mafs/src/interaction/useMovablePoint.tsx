@@ -7,7 +7,7 @@ import {
   type Ref,
 } from "vue";
 import { Theme } from "../display/Theme";
-import type * as vec from "../vec";
+import type { vec } from "../vec";
 import { MovablePoint } from "./MovablePoint";
 
 export type ConstraintFunction = (position: vec.Vector2) => vec.Vector2;

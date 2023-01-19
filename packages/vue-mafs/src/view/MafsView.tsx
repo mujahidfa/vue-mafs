@@ -8,8 +8,7 @@ import { useElementSize } from "@vueuse/core";
 
 import { normalizeProps, useDrag } from "vuse-gesture";
 import { round } from "../math";
-import * as vec from "../vec";
-import * as math from "../math";
+import { vec } from "../vec";
 import { transformInjectionKey } from "../context/TransformContext";
 import { spanInjectionKey } from "../context/SpanContext";
 
@@ -159,9 +158,7 @@ export const MafsView = defineComponent({
       return vec.matrixBuilder().scale(scaleX, scaleY).get();
     });
 
-    const toPxCSS = computed(() =>
-      math.matrixToCSSTransform(viewTransform.value)
-    );
+    const toPxCSS = computed(() => vec.toCSS(viewTransform.value));
 
     const coordinateContext: CoordinateContextShape = {
       xMin,

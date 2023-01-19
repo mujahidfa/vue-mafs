@@ -1,7 +1,7 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { range } from "../math";
 import { useTransformContext } from "../context/TransformContext";
-import * as vec from "../vec";
+import { vec } from "../vec";
 
 export interface GridPatternProps {
   id: string;

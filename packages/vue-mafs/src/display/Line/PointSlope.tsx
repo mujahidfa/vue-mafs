@@ -1,10 +1,10 @@
 import { defineComponent, type PropType } from "vue";
 import { Theme, type Stroked } from "../../display/Theme";
-import type { Vector2 } from "../../vec";
+import type { vec } from "../../vec";
 import { PointAngle } from "./PointAngle";
 
 export interface PointSlopeProps extends Stroked {
-  point: Vector2;
+  point: vec.Vector2;
   slope: number;
 }
 
@@ -12,7 +12,7 @@ export const PointSlope = defineComponent({
   name: "LinePointAngle",
   props: {
     point: {
-      type: Object as PropType<Vector2>,
+      type: Object as PropType<vec.Vector2>,
       required: true,
     },
     slope: {

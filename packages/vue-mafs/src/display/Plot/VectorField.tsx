@@ -1,6 +1,6 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { clamp } from "../../math";
-import * as vec from "../../vec";
+import { vec } from "../../vec";
 import { usePaneContext } from "../../context/PaneContext";
 import { Theme } from "../Theme";
 import { useTransformContext } from "../../context/TransformContext";
