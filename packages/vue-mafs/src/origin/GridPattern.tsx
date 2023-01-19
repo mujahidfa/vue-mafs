@@ -1,15 +1,7 @@
-/**
- * @private
- *
- * Creates an SVG <pattern> that looks like a cartesian coordinate plane grid.
- *
- * This is a bit more complex than just rendering lines, but is way more performant, since the
- * browser handles making the pattern repeat for us.
- */
-
 import { computed, defineComponent, type PropType } from "vue";
 import { range } from "../math";
-import { useScaleContext } from "../view/ScaleContext";
+import { useTransformContext } from "../context/TransformContext";
+import * as vec from "../vec";
 
 export interface GridPatternProps {
   id: string;
@@ -19,6 +11,14 @@ export interface GridPatternProps {
   ySubdivisions: number | false;
 }
 
+/**
+ * @private
+ *
+ * Creates an SVG <pattern> that looks like a cartesian coordinate plane grid.
+ *
+ * This is a bit more complex than just rendering lines, but is way more performant, since the
+ * browser handles making the pattern repeat for us.
+ */
 export const GridPattern = defineComponent({
   name: "GridPattern",
   props: {
@@ -44,10 +44,14 @@ export const GridPattern = defineComponent({
     },
   },
   setup(props) {
-    const { scaleX, scaleY } = useScaleContext();
+    const { viewTransform } = useTransformContext();
 
-    const width = computed(() => scaleX.value(props.xLines || 1));
-    const height = computed(() => -scaleY.value(props.yLines || 1));
+    const dimensions = computed(() =>
+      vec.transform([props.xLines || 1, props.yLines || 1], viewTransform.value)
+    );
+
+    const width = computed(() => dimensions.value[0]);
+    const height = computed(() => -dimensions.value[1]);
 
     const xs = computed<number[]>(() => {
       if (props.xSubdivisions && props.xSubdivisions > 1) {

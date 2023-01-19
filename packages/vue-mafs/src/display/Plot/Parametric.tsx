@@ -1,7 +1,8 @@
 import { computed, defineComponent, type PropType } from "vue";
 import * as vec from "../../vec";
 import type { Stroked } from "../Theme";
-import { useScaleContext } from "../../view/ScaleContext";
+import { useTransformContext } from "../../context/TransformContext";
+import { adaptiveSampling } from "./PlotUtils";
 
 export interface ParametricProps extends Stroked {
   /** A function that takes a `t` value and returns a point. */
@@ -60,60 +61,24 @@ export const Parametric = defineComponent({
     },
   },
   setup(props) {
-    const { cssScale, scaleX, scaleY } = useScaleContext();
+    const { viewTransform } = useTransformContext();
+
+    // Negative because the y-axis is flipped in the SVG coordinate system.
+    const pixelsPerSquare = computed(() => -vec.det(viewTransform.value));
 
     const tMin = computed(() => props.t[0]);
     const tMax = computed(() => props.t[1]);
-    const errorThreshold = computed(
-      () => 0.1 / (scaleX.value(1) * scaleY.value(-1))
+    const errorThreshold = computed(() => 0.1 / pixelsPerSquare.value);
+
+    const svgPath = computed(() =>
+      adaptiveSampling(
+        props.xy,
+        [tMin.value, tMax.value],
+        props.minSamplingDepth,
+        props.maxSamplingDepth,
+        errorThreshold.value
+      )
     );
-
-    const svgPath = computed(() => {
-      let pathDescriptor = "M ";
-
-      function smartSmooth(
-        min: number,
-        max: number,
-        pushLeft: boolean,
-        pushRight: boolean,
-        depth = 0
-      ) {
-        const t = 0.5;
-        const mid = min + (max - min) * t;
-
-        if (depth < props.minSamplingDepth) {
-          smartSmooth(min, mid, true, false, depth + 1);
-          smartSmooth(mid, max, false, true, depth + 1);
-          return;
-        }
-
-        const [xyMinX, xyMinY] = props.xy(min);
-        const [xyMidX, xyMidY] = props.xy(mid);
-        const [xyMaxX, xyMaxY] = props.xy(max);
-
-        if (depth < props.maxSamplingDepth) {
-          const xyLerpMid = vec.lerp([xyMinX, xyMinY], [xyMaxX, xyMaxY], t);
-          const error = vec.squareDist([xyMidX, xyMidY], xyLerpMid);
-          if (error > errorThreshold.value) {
-            smartSmooth(min, mid, true, false, depth + 1);
-            smartSmooth(mid, max, false, true, depth + 1);
-            return;
-          }
-        }
-
-        if (pushLeft && Number.isFinite(xyMinX) && Number.isFinite(xyMinY)) {
-          pathDescriptor += `${xyMinX} ${xyMinY} L `;
-        }
-        if (Number.isFinite(xyMidX) && Number.isFinite(xyMidY))
-          pathDescriptor += `${xyMidX} ${xyMidY} L `;
-        if (pushRight && Number.isFinite(xyMaxX) && Number.isFinite(xyMaxY))
-          pathDescriptor += `${xyMaxX} ${xyMaxY} L `;
-      }
-
-      smartSmooth(tMin.value, tMax.value, true, true);
-
-      return pathDescriptor.substring(0, pathDescriptor.length - 3);
-    });
 
     return () => (
       <path
@@ -123,11 +88,11 @@ export const Parametric = defineComponent({
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-dasharray={props.lineStyle === "dashed" ? "1,10" : undefined}
-        transform={cssScale.value}
         style={{
           stroke: props.color || "var(--mafs-fg)",
           strokeOpacity: props.opacity,
           vectorEffect: "non-scaling-stroke",
+          transform: "var(--mafs-view-transform)",
         }}
       />
     );

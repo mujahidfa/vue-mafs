@@ -1,9 +1,9 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { type Filled, Theme } from "./Theme";
-import { useScaleContext } from "../view/ScaleContext";
+import { useTransformContext } from "../context/TransformContext";
 import type { Vector2 } from "../vec";
-import { useTransformContext } from "./Transform";
 import * as vec from "../vec";
+import * as math from "../math";
 
 export interface EllipseProps extends Filled {
   center: Vector2;
@@ -56,34 +56,25 @@ export const Ellipse = defineComponent({
     },
   },
   setup(props) {
-    const { pixelMatrix } = useScaleContext();
-    const contextTransform = useTransformContext();
+    const { viewTransform: toPx, userTransform } = useTransformContext();
 
     const transform = computed(() =>
       vec
         .matrixBuilder()
         .translate(...props.center)
-        .mult(contextTransform.value)
+        .mult(userTransform.value)
         .scale(1, -1)
-        .mult(pixelMatrix.value)
+        .mult(toPx.value)
         .scale(1, -1)
         .get()
     );
 
-    const cssTransform = computed(() => {
-      // const [a, c, tx, b, d, ty] = transform;
-      const a = transform.value[0];
-      const b = transform.value[3];
-      const c = transform.value[1];
-      const d = transform.value[4];
-      const tx = transform.value[2];
-      const ty = transform.value[5];
-
-      return `
-        matrix(${a}, ${b}, ${c}, ${d}, ${tx}, ${ty})
+    const cssTransform = computed(
+      () => `
+        ${math.matrixToCSSTransform(transform.value)}
         rotate(${props.angle * (180 / Math.PI)})
-    `;
-    });
+    `
+    );
 
     return () => (
       <ellipse
