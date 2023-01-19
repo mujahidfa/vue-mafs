@@ -12,7 +12,7 @@ import { vec } from "../vec";
 import { transformInjectionKey } from "../context/TransformContext";
 import { spanInjectionKey } from "../context/SpanContext";
 
-export interface MafsViewProps {
+export interface MafsProps {
   width?: number | "auto";
   height?: number;
   /** Whether to enable panning with the mouse and keyboard */
@@ -29,7 +29,7 @@ export interface MafsViewProps {
   preserveAspectRatio?: "contain" | false;
 }
 
-export const MafsView = defineComponent({
+export const Mafs = defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Mafs",
   props: {
@@ -92,7 +92,7 @@ export const MafsView = defineComponent({
     const offset = ref<vec.Vector2>([0, 0]);
 
     const aoi = computed(() => {
-      const padding = (props as MafsViewProps).viewBox?.padding ?? 0.5;
+      const padding = (props as MafsProps).viewBox?.padding ?? 0.5;
       return {
         xMin: (props.viewBox?.x?.[0] ?? 0) - padding + offset.value[0],
         xMax: (props.viewBox?.x?.[1] ?? 0) + padding + offset.value[0],
