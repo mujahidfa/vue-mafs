@@ -1,17 +1,16 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { Theme, type Filled } from "./Theme";
 import { useTransformContext } from "../context/TransformContext";
-import type { Vector2 } from "../vec";
-import * as vec from "../vec";
+import { vec } from "../vec";
 
 export interface PolygonProps extends Filled {
-  points: Vector2[];
+  points: vec.Vector2[];
 }
 
 export const Polygon = defineComponent({
   props: {
     points: {
-      type: Array as PropType<Vector2[]>,
+      type: Array as PropType<vec.Vector2[]>,
       required: true,
     },
     color: {

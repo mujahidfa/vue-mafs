@@ -1,6 +1,6 @@
 import { computed, defineComponent, type PropType } from "vue";
 import { Theme, type Stroked } from "../../display/Theme";
-import * as vec from "../../vec";
+import { vec } from "../../vec";
 import { ThroughPoints } from "./ThroughPoints";
 
 export interface PointAngleProps extends Stroked {

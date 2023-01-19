@@ -2,7 +2,7 @@ import { computed, defineComponent, type PropType } from "vue";
 import { type Stroked, Theme } from "../../display/Theme";
 import { useTransformContext } from "../../context/TransformContext";
 import { round } from "../../math";
-import * as vec from "../../vec";
+import { vec } from "../../vec";
 
 export interface ThroughPointsProps extends Stroked {
   point1: vec.Vector2;

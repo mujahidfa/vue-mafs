@@ -1,6 +1,6 @@
 import { inject, type InjectionKey, type Ref } from "vue";
 import invariant from "tiny-invariant";
-import type * as vec from "../vec";
+import type { vec } from "../vec";
 
 export interface TransformContextShape {
   /**

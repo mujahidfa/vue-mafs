@@ -1,16 +1,9 @@
-import {
-  computed,
-  defineComponent,
-  ref,
-  watch,
-  watchEffect,
-  type PropType,
-} from "vue";
+import { computed, defineComponent, ref, type PropType } from "vue";
 import { normalizeProps, useDrag } from "vuse-gesture";
 import invariant from "tiny-invariant";
 import { Theme } from "../display/Theme";
 import { range } from "../math";
-import * as vec from "../vec";
+import { vec } from "../vec";
 import { useTransformContext } from "../context/TransformContext";
 import { useSpanContext } from "../context/SpanContext";
 
