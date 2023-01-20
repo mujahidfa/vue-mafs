@@ -46,13 +46,16 @@ export const Vector = defineComponent({
     },
   },
   setup(props) {
-    const { userTransform } = useTransformContext();
+    const { userTransform, viewTransform } = useTransformContext();
+    const combinedTransform = computed(() =>
+      vec.matrixMult(viewTransform.value, userTransform.value)
+    );
 
     const pixelTail = computed(() =>
-      vec.transform(props.tail, userTransform.value)
+      vec.transform(props.tail, combinedTransform.value)
     );
     const pixelTip = computed(() =>
-      vec.transform(props.tip, userTransform.value)
+      vec.transform(props.tip, combinedTransform.value)
     );
 
     const id = `mafs-triangle-${incrementer++}`;
@@ -67,7 +70,6 @@ export const Vector = defineComponent({
             refX="8"
             refY="4"
             orient="auto"
-            markerUnits="strokeWidth"
           >
             <path
               d="M 0 0 L 8 4 L 0 8 z"
@@ -86,7 +88,6 @@ export const Vector = defineComponent({
           style={{
             stroke: props.color || "var(--mafs-fg)",
             strokeOpacity: props.opacity,
-            transform: "var(--mafs-view-transform)",
             vectorEffect: "non-scaling-stroke",
           }}
         />
