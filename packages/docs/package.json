@@ -9,10 +9,12 @@
     "preview": "nuxi preview"
   },
   "devDependencies": {
-    "@nuxt-themes/docus": "^1.4.6",
+    "nuxt": "^3.0.0"
+  },
+  "dependencies": {
+    "@nuxt-themes/docus": "^1.4.7",
     "js-easing-functions": "^1.0.3",
     "lodash": "^4.17.21",
-    "nuxt": "^3.0.0",
-    "vue-mafs": "^0.2.1"
+    "vue-mafs": "workspace:^0.3.1"
   }
 }
